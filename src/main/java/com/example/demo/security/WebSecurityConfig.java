@@ -93,7 +93,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .and()
                 .ignoring()
-                .antMatchers("/h2-console/**/**");
+                .antMatchers("/h2-console/**/**")
+                .and()
+                .ignoring()
+                .antMatchers("/user/register");
     }
 
 }
