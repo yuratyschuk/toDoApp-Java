@@ -89,11 +89,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers(
                         HttpMethod.GET,
-                        "/" //Other Stuff You want to Ignore
+                        "/"
                 )
                 .and()
                 .ignoring()
-                .antMatchers("/h2-console/**/**");//Should not be in Production!
+                .antMatchers("/h2-console/**/**");
     }
 
 }
