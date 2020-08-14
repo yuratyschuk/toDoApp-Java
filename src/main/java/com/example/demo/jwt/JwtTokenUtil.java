@@ -19,10 +19,8 @@ import java.util.function.Function;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-    static final String CLAIM_KEY_USERNAME = "sub";
-    static final String CLAIM_KEY_CREATED = "iat";
     private static final long serialVersionUID = -3301605591108950415L;
-    private Clock clock = DefaultClock.INSTANCE;
+    private final Clock clock = DefaultClock.INSTANCE;
 
     @Value("${jwt.secret.key}")
     private String secret;
@@ -57,7 +55,6 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private Boolean ignoreTokenExpiration(String token) {
-        // here you specify tokens, for that the expiration is ignored
         return false;
     }
 

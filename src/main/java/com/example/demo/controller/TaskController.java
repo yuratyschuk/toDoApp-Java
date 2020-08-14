@@ -21,9 +21,9 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class TaskController {
 
-    TaskService taskService;
+    private final TaskService taskService;
 
-    ProjectService projectService;
+    private final ProjectService projectService;
 
     @Autowired
     public TaskController(TaskService taskService, ProjectService projectService) {
@@ -40,17 +40,18 @@ public class TaskController {
     }
 
     @GetMapping(value = "/taskList/{projectId}")
-    public ResponseEntity<List<Task>> showTaskListPage(@PathVariable("projectId") int projectId) {
-        return ResponseEntity.ok().body(taskService.getTaskByProjectId(projectId));
+    public ResponseEntity<List<Task>> getTaskListByProjectId(@PathVariable("projectId") int projectId) {
+        return ResponseEntity.status(HttpStatus.FOUND).body(taskService.getTaskByProjectId(projectId));
     }
 
-    @PostMapping(value = "/taskSave/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Task postTaskSave(@RequestBody Task task, @PathVariable("projectId") int projectId) {
-        System.out.println(task);
+    @PostMapping(value = "/taskSave/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces =  MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Task> saveTask(@RequestBody Task task, @PathVariable("projectId") int projectId) {
+
         Project project = projectService.getById(projectId);
         task.setProject(project);
         task.setActive(true);
-        return taskService.save(task);
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.save(task));
     }
 
     @DeleteMapping(value = "/taskDelete/{taskId}")
@@ -67,34 +68,42 @@ public class TaskController {
         task.setId(taskId);
         task.setProject(project);
 
-        return ResponseEntity.ok().body(taskService.update(task));
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.update(task));
     }
 
     @GetMapping(value = "/{taskId}")
-    public ResponseEntity<Task> getTask(@PathVariable("taskId") int taskId) {
-        return ResponseEntity.ok().body(taskService.getById(taskId));
+    public ResponseEntity<Task> getTaskById(@PathVariable("taskId") int taskId) {
+        return ResponseEntity.status(HttpStatus.FOUND).body(taskService.getById(taskId));
     }
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<Task>> getAllTasks() {
-        return ResponseEntity.ok().body(taskService.getAll());
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.getAll());
     }
 
     @PutMapping(value = "/taskActive/{taskId}")
-    public ResponseEntity<Task> changeTaskStatus(@PathVariable("taskId") int taskId) {
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable("taskId") int taskId) {
 
         Task task = taskService.getById(taskId);
 
         task = taskService.changeStatus(task);
-        return ResponseEntity.ok().body(taskService.update(task));
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.update(task));
     }
 
     @GetMapping(value = "/taskActive/{taskId}/{projectId}")
     public ResponseEntity<List<Task>> getTaskByStatus(@RequestParam("isActive") String isActive,
                                                       @PathVariable("projectId") int projectId) {
 
-        return ResponseEntity.ok().body(taskService.getTaskByProjectIdAndActive(projectId,
+        return ResponseEntity.status(HttpStatus.FOUND).body(taskService.getTaskByProjectIdAndActive(projectId,
                 Boolean.parseBoolean(isActive)));
+    }
+
+    @PutMapping(value = "/priority/{taskId}")
+    public ResponseEntity<?> updateTaskPriority(@RequestParam("priority") int priority,
+                                                   @PathVariable("taskId") int taskId) {
+        taskService.updatePriority(priority, taskId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

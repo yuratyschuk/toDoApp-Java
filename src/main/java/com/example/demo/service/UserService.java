@@ -84,8 +84,8 @@ public class UserService {
                 .orElseThrow(() -> new DataNotFoundException("User with username: " + username + " not found"));
     }
 
-    public User getByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password)
+    public void getByUsernameAndPassword(String username, String password) {
+        userRepository.findByUsernameAndPassword(username, password)
                 .orElseThrow(() -> new DataNotFoundException("User with username: " + username + " not found"));
     }
 
@@ -94,18 +94,26 @@ public class UserService {
         Date date = new Date();
         for (Task task : taskList) {
             if (task.getFinishDate() != null && date.compareTo(task.getFinishDate()) > 0) {
-                Project project = new Project();
-
-                for(User user : project.getUserList()) {
-                    Mail mail = new Mail();
-                    mail.setMailFrom("toDoApp@gmail.com");
-                    mail.setMailTo(user.getEmail());
-                    mail.setMailSubject("ToDo App");
-                    mail.setMailContent("You have expired task: " + task.getTitle());
-                    mailService.sendEmail(mail);
-                }
+                configureEmailBeforeSending(task);
             }
         }
     }
 
+    public void configureEmailBeforeSending(Task task) {
+        Project project = task.getProject();
+
+        for(User user : project.getUserList()) {
+            Mail mail = new Mail();
+            mail.setMailFrom("toDoApp@gmail.com");
+            mail.setMailTo(user.getEmail());
+            mail.setMailSubject("ToDo App");
+            mail.setMailContent("You have expired task: " + task.getTitle());
+            mailService.sendEmail(mail);
+        }
+    }
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new DataNotFoundException("User with email: " +
+                 email + " not found"));
+
+    }
 }

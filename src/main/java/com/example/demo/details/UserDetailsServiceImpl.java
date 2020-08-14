@@ -1,6 +1,7 @@
 package com.example.demo.details;
 
 import com.example.demo.model.Role;
+import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new UserDetailsImpl(userRepository.findByUsername(username).get());
+
+        return new UserDetailsImpl(userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found")));
     }
 
 }

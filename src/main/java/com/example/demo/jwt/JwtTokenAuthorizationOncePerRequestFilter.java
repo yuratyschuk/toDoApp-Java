@@ -35,10 +35,11 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws ServletException, IOException {
 
         final String requestTokenHeader = request.getHeader(this.tokenHeader);
-        logger.warn("REQUSET HEADER: " + requestTokenHeader);
+
         String username = null;
         String jwtToken = null;
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
@@ -46,15 +47,15 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
-                logger.error("JWT_TOKEN_UNABLE_TO_GET_USERNAME", e);
+                logger.error("JWT TOKEN UNABLE TO GET USERNAME", e);
             } catch (ExpiredJwtException e) {
-                logger.warn("JWT_TOKEN_EXPIRED", e);
+                logger.warn("JWT TOKEN EXPIRED", e);
             }
         } else {
-            logger.warn("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
+            logger.warn("JWT TOKEN DOES NOT START WITH BEARER STRING");
         }
 
-        logger.debug("JWT_TOKEN_USERNAME_VALUE '{}'" + username);
+        logger.debug("JWT TOKEN USERNAME VALUE '{}'" + username);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetailsImpl userDetails = (UserDetailsImpl) this.userDetailsService.loadUserByUsername(username);

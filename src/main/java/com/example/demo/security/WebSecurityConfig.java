@@ -70,8 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity
                 .headers()
-                .frameOptions().sameOrigin()  //H2 Console Needs this setting
-                .cacheControl(); //disable caching
+                .frameOptions().sameOrigin()
+                .cacheControl();
 
         httpSecurity.cors().disable();
     }

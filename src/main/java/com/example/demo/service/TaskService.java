@@ -2,13 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.model.Task;
-import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +28,11 @@ public class TaskService {
 
     public Task save(Task task) {
         task.setCreateDate(new Date());
+
+        if(task.getPriority() == -1) {
+            task.setPriority(0);
+        }
+
         return taskRepository.save(task);
     }
 
@@ -73,5 +76,7 @@ public class TaskService {
         return task;
     }
 
-
+    public void updatePriority(int priority, int taskId) {
+        taskRepository.updatePriority(priority, taskId);
+    }
 }

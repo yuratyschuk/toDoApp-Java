@@ -4,14 +4,13 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,9 +21,9 @@ import java.util.List;
 @SessionAttributes(types = User.class)
 public class UserController {
 
-    UserService userService;
+    private final UserService userService;
 
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -39,39 +38,35 @@ public class UserController {
         binder.registerCustomEditor(Date.class, editor);
     }
 
-    @GetMapping(value="/getAll")
+    @GetMapping(value = "/getAll")
     public ResponseEntity<List<User>> getAll(ModelMap modelMap) {
-        return ResponseEntity.ok().body(userService.getAll());
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAll());
     }
 
 
-    @PostMapping(value ="/register")
+    @PostMapping(value = "/register")
     public ResponseEntity<User> saveUser(@ModelAttribute("user") User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        return ResponseEntity.ok().body(userService.save(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
     @GetMapping(value = "/getById/{userId}")
-    public ResponseEntity<User> getById(@PathVariable("userId") int userId) {
+    public ResponseEntity<User> getUserById(@PathVariable("userId") int userId) {
 
-        return ResponseEntity.ok().body(userService.getById(userId));
+        return ResponseEntity.status(HttpStatus.FOUND).body(userService.getById(userId));
     }
 
     @PutMapping(value = "/update/{userId}")
-    public User update(@PathVariable("userId") int userId, @RequestBody User user) {
-        return userService.update(user);
+    public ResponseEntity<User> updateUser(@PathVariable("userId") int userId, @RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.update(user));
     }
 
     @DeleteMapping("/deleteById/{userId}")
-    public void deleteById(@PathVariable("userId") int userId) {
+    public ResponseEntity<?> deleteUserById(@PathVariable("userId") int userId) {
         userService.deleteById(userId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    @PostMapping(value = "/login")
-    public void postLogin(@ModelAttribute("user") User user) {
-
-        User loggedUser = userService.getByUsernameAndPassword(user.getUsername(), user.getPassword());
-    }
 }

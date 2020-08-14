@@ -17,4 +17,8 @@ public interface TaskRepository extends CrudRepository<Task, Integer> {
     @Query(value = "select * from task where task.project_id = ? AND task.active = ?", nativeQuery = true)
     List<Task> getAllByProjectIdAndActive(int projectId, boolean active);
 
+    @Modifying
+    @Query(value = "update task set task.priority = ? where task.id = ?", nativeQuery=true)
+    void updatePriority(int priority, int taskId);
+
 }

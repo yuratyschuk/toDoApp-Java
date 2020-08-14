@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/project")
 public class ProjectController {
 
-    ProjectService projectService;
+    private final ProjectService projectService;
 
     @Autowired
     public ProjectController(ProjectService projectService) {
@@ -27,44 +27,49 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/create")
-    public Project postCreateProject(@RequestBody Project project) {
+    public ResponseEntity<Project> saveProject(@RequestBody Project project) {
 
-        System.out.println("test: " + project);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         User user = userDetails.getUser();
         project.setUserList(Collections.singletonList(user));
 
-        return projectService.save(project);
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectService.save(project));
     }
 
+
     @DeleteMapping(value = "/delete/{projectId}")
-    public ResponseEntity<?> postDeleteProject(@PathVariable("projectId") int projectId) {
+    public ResponseEntity<?> deleteProject(@PathVariable("projectId") int projectId) {
         projectService.deleteById(projectId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(value = "/edit/{projectId}")
-    public ResponseEntity<Project> postEditProject(@ModelAttribute Project project) {
-        return ResponseEntity.ok().body(projectService.update(project));
+    public ResponseEntity<Project> updateProject(@ModelAttribute Project project) {
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.update(project));
     }
 
     @GetMapping(value = "/projectList")
-    public List<Project> getAllProject() {
-
-
-        return projectService.getAllByUserId(1);
+    public ResponseEntity<List<Project>> getAllProjectsByUserId() {
+//        return projectService.getAllByUserId(1);
+        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getAllByUserId(1));
     }
 
     @GetMapping(value = "/{projectId}")
     public ResponseEntity<Project> getProject(@PathVariable("projectId") int projectId) {
 
-        return ResponseEntity.ok().body(projectService.getById(projectId));
+        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getById(projectId));
     }
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<Project>> getAllProjects() {
-        return ResponseEntity.ok().body(projectService.getAll());
+        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getAll());
+    }
+
+    @PostMapping(value = "/share/{projectId}")
+    public ResponseEntity<Project> shareProject(@PathVariable("projectId") int projectId,
+                                                @RequestParam String credentials) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.share(credentials, projectId));
     }
 }

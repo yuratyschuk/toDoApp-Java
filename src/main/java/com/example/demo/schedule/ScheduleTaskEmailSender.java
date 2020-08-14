@@ -16,7 +16,7 @@ public class ScheduleTaskEmailSender {
         this.userService = userService;
     }
 
-    @Scheduled(cron = "0 0 24 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void sendMailToOutOfDateTasks() {
         userService.checkIfTaskIsOutOfDate();
     }

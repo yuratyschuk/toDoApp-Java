@@ -2,15 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.model.Project;
-import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.ProjectRepository;
-import com.example.demo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,11 +62,24 @@ public class ProjectService {
         return projectRepository.findAllByUser(id);
     }
 
-    public void share(String username, int projectId) {
-        User user = userService.getByUsername(username);
+
+
+    public Project share(String credentials, int projectId) throws Exception {
+        User user;
+        if(credentials.contains("@")) {
+            user = userService.getByEmail(credentials);
+        } else {
+            user = userService.getByUsername(credentials);
+        }
+
+
         Project project = getById(projectId);
+        if(project.getUserList().contains(user)) {
+            throw new Exception("Project already shared: " + project.getName());
+        }
         project.setUserList(Collections.singletonList(user));
-        save(project);
+
+        return save(project);
     }
 
 }

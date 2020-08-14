@@ -6,6 +6,8 @@ import com.example.demo.exception.AuthenticationException;
 import com.example.demo.jwt.JwtTokenRequest;
 import com.example.demo.jwt.JwtTokenResponse;
 import com.example.demo.jwt.JwtTokenUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,14 +24,17 @@ import java.util.Objects;
 @RestController
 @CrossOrigin("http://localhost:4200")
 public class JwtAuthRestController {
+
+    private static Logger logger = LogManager.getLogger(JwtAuthRestController.class);
+
     @Value("${jwt.http.request.header}")
     private String tokenHeader;
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    private UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     public JwtAuthRestController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil,
@@ -48,6 +53,8 @@ public class JwtAuthRestController {
         final UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
+
+        logger.info("Test logger: " + authenticationRequest.getUsername());
 
         return ResponseEntity.ok(new JwtTokenResponse(token));
     }

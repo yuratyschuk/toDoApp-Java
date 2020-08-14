@@ -1,9 +1,12 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -11,6 +14,7 @@ import java.util.Date;
 @Entity(name = "task")
 @Component
 @Table(name = "task")
+@EntityListeners(AuditingEntityListener.class)
 public class Task {
 
     @Id
@@ -32,6 +36,11 @@ public class Task {
     @Column(name = "active")
     @NotNull
     private boolean isActive;
+
+    @NotNull
+    @Min(0)
+    @Max(3)
+    private int priority;
 
     @ManyToOne(fetch=FetchType.EAGER)
     @NotNull
@@ -95,6 +104,14 @@ public class Task {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override
