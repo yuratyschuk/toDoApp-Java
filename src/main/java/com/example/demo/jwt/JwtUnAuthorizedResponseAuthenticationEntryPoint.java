@@ -1,9 +1,20 @@
 package com.example.demo.jwt;
 
 
+import com.example.demo.exception.CustomAuthenticationException;
+import com.example.demo.exception.DataNotFoundException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.zookeeper.proto.ErrorResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +27,19 @@ public class JwtUnAuthorizedResponseAuthenticationEntryPoint implements Authenti
 
     private static final long serialVersionUID = -8970718410437077606L;
 
+    private final ObjectMapper objectMapper;
+
+    @Autowired
+    JwtUnAuthorizedResponseAuthenticationEntryPoint(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                "You would need to provide the Jwt Token to Access This resource");
+        ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
+        httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+        httpResponse.getServletResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        httpResponse.getBody().write(objectMapper.
+                writeValueAsString(new CustomAuthenticationException(e.getMessage())).getBytes());
     }
 }

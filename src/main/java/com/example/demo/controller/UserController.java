@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.kafka.config.KafkaService;
+import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     private final UserService userService;
@@ -26,6 +25,7 @@ public class UserController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final KafkaService kafkaService;
+
 
     @Autowired
     public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder,
@@ -51,6 +51,7 @@ public class UserController {
     @PostMapping(value = "/register")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        kafkaService.sendMessage(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }

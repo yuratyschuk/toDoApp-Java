@@ -4,10 +4,13 @@ import com.example.demo.details.UserDetailsImpl;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import com.example.demo.service.ProjectService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,18 +18,20 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
 
+    private final UserService userService;
+
     @Autowired
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
+        this.userService = userService;
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/save")
     public ResponseEntity<Project> saveProject(@RequestBody Project project) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -50,10 +55,13 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.OK).body(projectService.update(project));
     }
 
-    @GetMapping(value = "/projectList")
+    @GetMapping(value = "/list")
     public ResponseEntity<List<Project>> getAllProjectsByUserId() {
-//        return projectService.getAllByUserId(1);
-        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getAllByUserId(1));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.getByUsername(authentication.getName());
+
+
+        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getAllByUserId(user.getId()));
     }
 
     @GetMapping(value = "/{projectId}")

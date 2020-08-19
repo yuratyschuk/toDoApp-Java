@@ -38,6 +38,7 @@ public class User {
     @Column(name = "registration_date")
     private Date registrationDate;
 
+    @NotEmpty
     private String email;
 
 

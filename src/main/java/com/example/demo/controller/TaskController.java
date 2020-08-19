@@ -17,8 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/task")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/tasks")
 public class TaskController {
 
     private final TaskService taskService;
@@ -39,12 +38,12 @@ public class TaskController {
         binder.registerCustomEditor(Date.class, editor);
     }
 
-    @GetMapping(value = "/taskList/{projectId}")
+    @GetMapping(value = "/list/{projectId}")
     public ResponseEntity<List<Task>> getTaskListByProjectId(@PathVariable("projectId") int projectId) {
         return ResponseEntity.status(HttpStatus.FOUND).body(taskService.getTaskByProjectId(projectId));
     }
 
-    @PostMapping(value = "/taskSave/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/save/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> saveTask(@RequestBody Task task, @PathVariable("projectId") int projectId) {
 
@@ -54,14 +53,14 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.save(task));
     }
 
-    @DeleteMapping(value = "/taskDelete/{taskId}")
+    @DeleteMapping(value = "/delete/{taskId}")
     public ResponseEntity<?> deleteTask(@PathVariable("taskId") int taskId) {
         taskService.deleteById(taskId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/taskUpdate/{taskId}/projects/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update/{taskId}/projects/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> updateTask(@RequestBody Task task, @PathVariable("taskId") int taskId,
                                            @PathVariable("projectId") int projectId) {
         Project project = projectService.getById(projectId);
@@ -81,7 +80,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getAll());
     }
 
-    @PutMapping(value = "/taskActive/{taskId}")
+    @PutMapping(value = "/active/{taskId}")
     public ResponseEntity<Task> updateTaskStatus(@PathVariable("taskId") int taskId) {
 
         Task task = taskService.getById(taskId);
@@ -90,7 +89,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.update(task));
     }
 
-    @GetMapping(value = "/taskActive/{taskId}/{projectId}")
+    @GetMapping(value = "/active/{taskId}/{projectId}")
     public ResponseEntity<List<Task>> getTaskByStatus(@RequestParam("isActive") String isActive,
                                                       @PathVariable("projectId") int projectId) {
 

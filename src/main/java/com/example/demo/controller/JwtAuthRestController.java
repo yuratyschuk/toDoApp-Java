@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.details.UserDetailsImpl;
 import com.example.demo.details.UserDetailsServiceImpl;
-import com.example.demo.exception.AuthenticationException;
+import com.example.demo.exception.CustomAuthenticationException;
 import com.example.demo.jwt.JwtTokenRequest;
 import com.example.demo.jwt.JwtTokenResponse;
 import com.example.demo.jwt.JwtTokenUtil;
@@ -10,19 +10,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
 public class JwtAuthRestController {
 
     private static Logger logger = LogManager.getLogger(JwtAuthRestController.class);
@@ -46,15 +41,16 @@ public class JwtAuthRestController {
 
     @PostMapping(value = "${jwt.get.token.uri}")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)
-            throws AuthenticationException {
+            throws CustomAuthenticationException {
 
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+//        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                            authenticationRequest.getPassword()));
 
         final UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
-
-        logger.info("Test logger: " + authenticationRequest.getUsername());
 
         return ResponseEntity.ok(new JwtTokenResponse(token));
     }
@@ -72,22 +68,22 @@ public class JwtAuthRestController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-
-    @ExceptionHandler({ AuthenticationException.class })
-    public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-    }
-
-    private void authenticate(String username, String password) {
-        Objects.requireNonNull(username);
-        Objects.requireNonNull(password);
-
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new AuthenticationException("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new AuthenticationException("INVALID_CREDENTIALS", e);
-        }
-    }
+////
+////    @ExceptionHandler({ AuthenticationException.class })
+////    public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
+////        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+////    }
+//
+//    private void authenticate(String username, String password) {
+//        Objects.requireNonNull(username);
+//        Objects.requireNonNull(password);
+//
+//        try {
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+//        } catch (DisabledException e) {
+//            throw new AuthenticationException("USER_DISABLED", e);
+//        } catch (BadCredentialsException e) {
+//            throw new AuthenticationException("INVALID_CREDENTIALS", e);
+//        }
+//    }
 }

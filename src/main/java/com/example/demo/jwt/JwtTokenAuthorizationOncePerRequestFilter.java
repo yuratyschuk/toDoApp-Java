@@ -55,7 +55,6 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
             logger.warn("JWT TOKEN DOES NOT START WITH BEARER STRING");
         }
 
-        logger.debug("JWT TOKEN USERNAME VALUE '{}'" + username);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetailsImpl userDetails = (UserDetailsImpl) this.userDetailsService.loadUserByUsername(username);
