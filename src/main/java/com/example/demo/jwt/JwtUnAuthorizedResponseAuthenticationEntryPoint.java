@@ -2,11 +2,8 @@ package com.example.demo.jwt;
 
 
 import com.example.demo.exception.CustomAuthenticationException;
-import com.example.demo.exception.DataNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.zookeeper.proto.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +11,6 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

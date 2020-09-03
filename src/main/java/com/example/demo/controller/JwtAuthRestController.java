@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class JwtAuthRestController {
 
-    private static Logger logger = LogManager.getLogger(JwtAuthRestController.class);
 
     @Value("${jwt.http.request.header}")
     private String tokenHeader;
@@ -43,7 +42,6 @@ public class JwtAuthRestController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)
             throws CustomAuthenticationException {
 
-//        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                             authenticationRequest.getPassword()));
@@ -59,7 +57,6 @@ public class JwtAuthRestController {
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String authToken = request.getHeader(tokenHeader);
         final String token = authToken.substring(7);
-        String username = jwtTokenUtil.getUsernameFromToken(token);
 
         if (jwtTokenUtil.canTokenBeRefreshed(token)) {
             String refreshedToken = jwtTokenUtil.refreshToken(token);
@@ -68,22 +65,5 @@ public class JwtAuthRestController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-////
-////    @ExceptionHandler({ AuthenticationException.class })
-////    public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
-////        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-////    }
-//
-//    private void authenticate(String username, String password) {
-//        Objects.requireNonNull(username);
-//        Objects.requireNonNull(password);
-//
-//        try {
-//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-//        } catch (DisabledException e) {
-//            throw new AuthenticationException("USER_DISABLED", e);
-//        } catch (BadCredentialsException e) {
-//            throw new AuthenticationException("INVALID_CREDENTIALS", e);
-//        }
-//    }
+
 }

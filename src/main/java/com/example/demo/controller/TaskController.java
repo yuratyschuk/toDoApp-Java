@@ -77,7 +77,7 @@ public class TaskController {
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<Task>> getAllTasks() {
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.getAll());
+        return ResponseEntity.status(HttpStatus.FOUND).body(taskService.getAll());
     }
 
     @PutMapping(value = "/active/{taskId}")

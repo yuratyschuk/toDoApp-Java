@@ -1,4 +1,4 @@
-INSERT INTO user(id, username, first_name, last_name, registration_date, password, email)
+INSERT INTO users(id, username, first_name, last_name, registration_date, password, email)
 VALUES (1, 'first user', 'Yura', 'First last name', sysdate(), 'password', 'yuratyschuk4@gmail.com'),
        (2, 'second user', 'Liza', 'Second last name', sysdate(), 'password', 'yuratyschuk3@gmail.com'),
        (3, 'third user', 'Anton', 'Third last name', sysdate(), 'password', 'yuratyschuk2@gmail.com'),

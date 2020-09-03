@@ -3,16 +3,13 @@ package com.example.demo.service;
 import com.example.demo.email.sender.Mail;
 import com.example.demo.email.sender.MailService;
 import com.example.demo.exception.DataNotFoundException;
+import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.schedule.ScheduleTaskEmailSender;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +17,7 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -31,24 +29,22 @@ public class UserService {
 
     TaskRepository taskService;
 
-    @Autowired
     MailService mailService;
 
-
-    private static final Logger log = LoggerFactory.getLogger(ScheduleTaskEmailSender.class);
-
+    KafkaService kafkaService;
 
     @Autowired
     public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                       TaskRepository taskService) {
+                       TaskRepository taskService, MailService mailService, KafkaService kafkaService) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.taskService = taskService;
+        this.mailService = mailService;
+        this.kafkaService = kafkaService;
     }
 
     public User save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
 
         return userRepository.save(user);
     }
@@ -59,7 +55,7 @@ public class UserService {
         if (userOptional.isPresent()) {
             return userOptional.get();
         } else {
-            throw new DataNotFoundException("User with id: " + id + " not found");
+            throw new DataNotFoundException("User with id " + id + " not found");
         }
     }
 
@@ -81,12 +77,12 @@ public class UserService {
 
     public User getByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new DataNotFoundException("User with username: " + username + " not found"));
+                .orElseThrow(() -> new DataNotFoundException("User with username " + username + " not found"));
     }
 
     public void getByUsernameAndPassword(String username, String password) {
         userRepository.findByUsernameAndPassword(username, password)
-                .orElseThrow(() -> new DataNotFoundException("User with username: " + username + " not found"));
+                .orElseThrow(() -> new DataNotFoundException("User with username " + username + " not found"));
     }
 
     public void checkIfTaskIsOutOfDate() {
@@ -95,6 +91,7 @@ public class UserService {
         for (Task task : taskList) {
             if (task.getFinishDate() != null && date.compareTo(task.getFinishDate()) > 0) {
                 configureEmailBeforeSending(task);
+                ;
             }
         }
     }
@@ -112,7 +109,7 @@ public class UserService {
         }
     }
     public User getByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new DataNotFoundException("User with email: " +
+        return userRepository.findByEmail(email).orElseThrow(() -> new DataNotFoundException("User with email " +
                  email + " not found"));
 
     }

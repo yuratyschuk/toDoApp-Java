@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,6 @@ import java.util.Date;
 @Entity(name = "task")
 @Component
 @Table(name = "task")
-@EntityListeners(AuditingEntityListener.class)
 public class Task {
 
     @Id
@@ -42,9 +41,9 @@ public class Task {
     @Max(3)
     private int priority;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.LAZY)
     @NotNull
-    @JsonBackReference
+    @JsonIgnore
     private Project project;
 
     public Task() {

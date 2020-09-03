@@ -25,7 +25,6 @@ public class UserDetailsImpl implements UserDetails {
         return null;
     }
 
-
     @Override
     @JsonIgnore
     public String getPassword() {
