@@ -27,7 +27,12 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         return buildResponseEntity(new ErrorModel(HttpStatus.BAD_REQUEST, e));
     }
 
-    private ResponseEntity<?> buildResponseEntity(ErrorModel errorModel ) {
+    @ExceptionHandler({AlreadySharedException.class})
+    public ResponseEntity<?> handleAlreadySharedException(AlreadySharedException e) {
+        return buildResponseEntity((new ErrorModel(HttpStatus.BAD_REQUEST, e)));
+    }
+
+    private ResponseEntity<?> buildResponseEntity(ErrorModel errorModel) {
         return new ResponseEntity<>(errorModel, errorModel.getStatus());
     }
 

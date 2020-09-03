@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.jms.JmsService;
 import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.User;
@@ -49,7 +50,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/getAll")
-    public ResponseEntity<List<User>> getAll(ModelMap modelMap) {
+    public ResponseEntity<Iterable<User>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAll());
     }
 
@@ -65,7 +66,8 @@ public class UserController {
     @GetMapping(value = "/subscribe")
     public ResponseEntity<?> subscribeUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getByUsername(authentication.getName());
+        User user = userService.getByUsername(authentication.getName())
+                .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
         jmsService.send(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -74,7 +76,8 @@ public class UserController {
     @GetMapping(value = "/get/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable("userId") int userId) {
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(userService.getById(userId));
+        return ResponseEntity.status(HttpStatus.FOUND).body(userService.getById(userId)
+        .orElseThrow(() -> new DataNotFoundException("User not found. Id: " + userId)));
     }
 
     @PutMapping(value = "/update/{userId}")

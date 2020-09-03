@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.details.UserDetailsImpl;
+import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import com.example.demo.service.ProjectService;
@@ -56,9 +57,10 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<List<Project>> getAllProjectsByUserId() {
+    public ResponseEntity<Iterable<Project>> getAllProjectsByUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getByUsername(authentication.getName());
+        User user = userService.getByUsername(authentication.getName())
+                .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
 
 
         return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getAllByUserId(user.getId()));
@@ -67,11 +69,12 @@ public class ProjectController {
     @GetMapping(value = "/{projectId}")
     public ResponseEntity<Project> getProject(@PathVariable("projectId") int projectId) {
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getById(projectId));
+        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getById(projectId)
+        .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId)));
     }
 
     @GetMapping(value = "/getAll")
-    public ResponseEntity<List<Project>> getAllProjects() {
+    public ResponseEntity<Iterable<Project>> getAllProjects() {
         return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getAll());
     }
 

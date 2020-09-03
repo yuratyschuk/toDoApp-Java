@@ -9,6 +9,7 @@ import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,18 +50,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getById(int id) {
-        Optional<User> userOptional = userRepository.findById(id);
-
-        if (userOptional.isPresent()) {
-            return userOptional.get();
-        } else {
-            throw new DataNotFoundException("User with id " + id + " not found");
-        }
+    public Optional<User> getById(int id) {
+        return userRepository.findById(id);
     }
 
-    public List<User> getAll() {
-        return (List<User>) userRepository.findAll();
+    public Iterable<User> getAll() {
+        return  userRepository.findAll();
     }
 
     public User update(User user) {
@@ -75,9 +70,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User getByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new DataNotFoundException("User with username " + username + " not found"));
+    public Optional<User> getByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public void getByUsernameAndPassword(String username, String password) {
@@ -108,9 +102,7 @@ public class UserService {
             mailService.sendEmail(mail);
         }
     }
-    public User getByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new DataNotFoundException("User with email " +
-                 email + " not found"));
-
+    public Optional<User> getByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

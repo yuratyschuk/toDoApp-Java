@@ -22,30 +22,21 @@ public class ProjectService {
 
     @Autowired
     public ProjectService(ProjectRepository projectRepository, UserService userService) {
-         this.projectRepository = projectRepository;
-         this.userService = userService;
+        this.projectRepository = projectRepository;
+        this.userService = userService;
     }
-
-
-
 
 
     public Project save(Project project) {
         return projectRepository.save(project);
     }
 
-    public Project getById(int id) {
-        Optional<Project> projectOptional = projectRepository.findById(id);
-
-        if (projectOptional.isPresent()) {
-            return projectOptional.get();
-        } else {
-            throw new DataNotFoundException("Project with id: " + id + " not found");
-        }
+    public Optional<Project> getById(int id) {
+        return projectRepository.findById(id);
     }
 
-    public List<Project> getAll() {
-        return (List<Project>) projectRepository.findAll();
+    public Iterable<Project> getAll() {
+        return projectRepository.findAll();
     }
 
     public Project update(Project project) {
@@ -60,25 +51,30 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public List<Project> getAllByUserId(int id) {
+    public Iterable<Project> getAllByUserId(int id) {
         return projectRepository.findAllByUser(id);
     }
 
 
-
     public Project share(String credentials, int projectId) throws Exception {
         User user;
-        if(credentials.contains("@")) {
-            user = userService.getByEmail(credentials);
+        if (credentials.contains("@")) {
+            user = userService.getByEmail(credentials)
+                    .orElseThrow(() -> new DataNotFoundException("User not found. Email: " + credentials));
         } else {
-            user = userService.getByUsername(credentials);
+            user = userService.getByUsername(credentials)
+                    .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + credentials));
         }
 
 
-        Project project = getById(projectId);
-        if(project.getUserList().contains(user)) {
+        Optional<Project> projectOptional = getById(projectId);
+        Project project = projectOptional
+                .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId));
+
+        if (project.getUserList().contains(user)) {
             throw new Exception("Project already shared: " + project.getName());
         }
+
         project.setUserList(Collections.singletonList(user));
 
         return save(project);

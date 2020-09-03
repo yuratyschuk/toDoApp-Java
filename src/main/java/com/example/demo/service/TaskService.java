@@ -36,18 +36,12 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public Task getById(int id) {
-        Optional<Task> taskOptional = taskRepository.findById(id);
-
-        if (taskOptional.isPresent()) {
-            return taskOptional.get();
-        } else {
-            throw new DataNotFoundException("Task with id: " + id + " not found");
-        }
+    public Optional<Task> getById(int id) {
+        return taskRepository.findById(id);
     }
 
-    public List<Task> getAll() {
-        return (List<Task>) taskRepository.findAll();
+    public Iterable<Task> getAll() {
+        return taskRepository.findAll();
     }
 
     public Task update(Task task) {
@@ -62,11 +56,11 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public List<Task> getTaskByProjectId(int id) {
+    public Iterable<Task> getTaskByProjectId(int id) {
        return taskRepository.getAllByProjectId(id);
     }
 
-    public List<Task> getTaskByProjectIdAndActive(int projectId, boolean active) {
+    public Iterable<Task> getTaskByProjectIdAndActive(int projectId, boolean active) {
         return taskRepository.getAllByProjectIdAndActive(projectId, active);
     }
 

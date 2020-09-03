@@ -29,4 +29,3 @@ VALUES (4, 1),
        (4, 2);
 
 
-INSERT INTO role(id, name) VALUES (1,'ADMIN');

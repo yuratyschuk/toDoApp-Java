@@ -26,6 +26,7 @@ public class User {
     private String password;
 
     @Transient
+    @NotEmpty
     private String repeatedPassword;
 
     @Column(name = "first_name")
@@ -44,10 +45,6 @@ public class User {
     @ManyToMany(mappedBy = "userList", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Project> projectSet;
-
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
 
 
 
@@ -127,13 +124,6 @@ public class User {
         this.repeatedPassword = repeatedPassword;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 
     @Override
     public String toString() {
