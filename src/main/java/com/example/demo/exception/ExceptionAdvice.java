@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
-import java.util.Arrays;
 
 @ControllerAdvice
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {

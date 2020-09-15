@@ -6,23 +6,16 @@ import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class    UserController {
 
     private final UserService userService;
 
@@ -42,12 +35,6 @@ public class UserController {
         this.jmsService = jmsService;
     }
 
-    @InitBinder
-    public void setup(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
-        binder.registerCustomEditor(Date.class, editor);
-    }
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<Iterable<User>> getAll() {

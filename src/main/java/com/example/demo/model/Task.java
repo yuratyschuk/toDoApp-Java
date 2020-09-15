@@ -1,8 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -12,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity(name = "task")
-@Component
 @Table(name = "task")
 public class Task {
 
@@ -27,9 +25,11 @@ public class Task {
 
     @Column(name = "create_date")
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
     private Date createDate;
 
     @Column(name = "finish_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
     private Date finishDate;
 
     @Column(name = "active")
@@ -41,7 +41,7 @@ public class Task {
     @Max(3)
     private int priority;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @NotNull
     @JsonIgnore
     private Project project;

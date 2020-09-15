@@ -178,6 +178,14 @@
         </plugins>
 
         <finalName>todo_app_aws</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+
 
 </project>

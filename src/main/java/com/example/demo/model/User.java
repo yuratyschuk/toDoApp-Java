@@ -1,9 +1,9 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -42,7 +42,7 @@ public class User {
     private String email;
 
 
-    @ManyToMany(mappedBy = "userList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "userList")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Project> projectSet;
 
@@ -108,11 +108,11 @@ public class User {
         this.email = email;
     }
 
-    public Set<Project> getTaskSet() {
+    public Set<Project> getProjectSet() {
         return projectSet;
     }
 
-    public void setTaskSet(Set<Project> projectSet) {
+    public void setProjectSet(Set<Project> projectSet) {
         this.projectSet = projectSet;
     }
 
@@ -135,7 +135,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", registrationDate=" + registrationDate +
                 ", email='" + email + '\'' +
-                ", taskSet=" + projectSet +
+                ", projectSet=" + projectSet +
                 '}';
     }
 }

@@ -9,7 +9,6 @@ import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
-import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

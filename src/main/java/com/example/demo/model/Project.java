@@ -1,11 +1,8 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -23,11 +20,13 @@ public class Project {
     @NotEmpty
     public String name;
 
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "project_id")
+
     public List<Task> taskList;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "USER_PROJECT",
             joinColumns = {@JoinColumn(name = "project_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
@@ -60,9 +59,8 @@ public class Project {
     }
 
     public void setTaskList(List<Task> taskList) {
-        if(this.taskList.isEmpty()) {
-            this.taskList = taskList;
-        } else {
+        this.taskList = taskList;
+        if(taskList != null) {
             this.taskList.addAll(taskList);
         }
     }

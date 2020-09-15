@@ -6,16 +6,10 @@ import com.example.demo.model.Task;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -30,13 +24,6 @@ public class TaskController {
         this.taskService = taskService;
         this.projectService = projectService;
 
-    }
-
-    @InitBinder
-    public void setup(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
-        binder.registerCustomEditor(Date.class, editor);
     }
 
     @GetMapping(value = "/list/{projectId}")

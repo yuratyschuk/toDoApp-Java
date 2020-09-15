@@ -1,7 +1,6 @@
 package com.example.demo.jwt;
 
 import com.example.demo.details.UserDetailsImpl;
-import com.example.demo.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;

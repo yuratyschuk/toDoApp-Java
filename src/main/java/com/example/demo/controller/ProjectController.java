@@ -1,22 +1,18 @@
 package com.example.demo.controller;
 
-import com.example.demo.details.UserDetailsImpl;
 import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
@@ -33,11 +29,12 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<Project> saveProject(@RequestBody Project project) {
+    public ResponseEntity<Project> saveProject(@ModelAttribute Project project) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        User user = userDetails.getUser();
+//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        User user = userService.getByUsername(authentication.getName())
+                .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
         project.setUserList(Collections.singletonList(user));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.save(project));
