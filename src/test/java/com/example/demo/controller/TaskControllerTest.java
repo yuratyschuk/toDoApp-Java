@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.config.TestSecurityConfig;
 import com.example.demo.details.UserDetailsImpl;
 import com.example.demo.details.UserDetailsServiceImpl;
 import com.example.demo.jwt.JwtTokenUtil;
@@ -38,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TestSecurityConfig.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class TaskControllerTest {
 
