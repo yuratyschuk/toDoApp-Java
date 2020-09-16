@@ -1461,3 +1461,313 @@ Caused by: org.apache.activemq.transport.TransportDisposedIOException: peer (vm:
 2020-09-16 14:30:23,428 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
 2020-09-16 14:30:23,428 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-4 - Shutdown initiated...
 2020-09-16 14:30:23,430 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-4 - Shutdown completed.
+2020-09-16 14:51:54,475 INFO org.springframework.boot.StartupInfoLogger [main] Starting JwtAuthRestControllerTest on DESKTOP-7GLQTMP with PID 10132 (started by yurat in D:\Projects\Java\demo)
+2020-09-16 14:51:54,518 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: dev
+2020-09-16 14:51:59,627 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2020-09-16 14:52:00,213 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 544ms. Found 3 JPA repository interfaces.
+2020-09-16 14:52:04,351 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@713a35c5' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-16 14:52:04,421 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-16 14:52:05,435 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-09-16 14:52:05,502 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-09-16 14:52:05,892 INFO org.hibernate.jpa.internal.util.LogHelper [task-1] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-09-16 14:52:06,450 INFO org.hibernate.Version [task-1] HHH000412: Hibernate ORM core version 5.4.17.Final
+2020-09-16 14:52:06,883 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [task-1] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-09-16 14:52:07,401 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-09-16 14:52:08,625 INFO com.zaxxer.hikari.HikariDataSource [task-1] HikariPool-1 - Starting...
+2020-09-16 14:52:11,213 INFO com.zaxxer.hikari.HikariDataSource [task-1] HikariPool-1 - Start completed.
+2020-09-16 14:52:11,550 INFO org.hibernate.dialect.Dialect [task-1] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-09-16 14:52:14,839 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/authenticate', POST], []
+2020-09-16 14:52:14,839 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/**', OPTIONS], []
+2020-09-16 14:52:14,839 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/', GET], []
+2020-09-16 14:52:14,840 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/h2-console/**/**'], []
+2020-09-16 14:52:14,841 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/user/register'], []
+2020-09-16 14:52:15,458 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@a316f6b, org.springframework.security.web.context.SecurityContextPersistenceFilter@7f2b39a, org.springframework.security.web.header.HeaderWriterFilter@1c74d19, org.springframework.security.web.authentication.logout.LogoutFilter@17fbfb02, com.example.demo.jwt.JwtTokenAuthorizationOncePerRequestFilter@7aea704c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@760f1081, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@14457a95, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@63f9ddf9, org.springframework.security.web.session.SessionManagementFilter@5345dfe8, org.springframework.security.web.access.ExceptionTranslationFilter@2450256f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1894fa9f]
+2020-09-16 14:52:19,636 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [task-1] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-09-16 14:52:19,681 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [task-1] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-09-16 14:52:20,220 INFO org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testDb'
+2020-09-16 14:52:21,471 INFO org.springframework.mock.web.MockServletContext [main] Initializing Spring TestDispatcherServlet ''
+2020-09-16 14:52:21,472 INFO org.springframework.web.servlet.FrameworkServlet [main] Initializing Servlet ''
+2020-09-16 14:52:21,504 INFO org.springframework.web.servlet.FrameworkServlet [main] Completed initialization in 31 ms
+2020-09-16 14:52:22,532 INFO org.apache.activemq.broker.BrokerService [main] Using Persistence Adapter: MemoryPersistenceAdapter
+2020-09-16 14:52:23,353 INFO org.apache.activemq.broker.jmx.ManagementContext$1 [JMX connector] JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+2020-09-16 14:52:23,365 INFO org.apache.activemq.broker.BrokerService [main] Apache ActiveMQ 5.15.12 (localhost, ID:DESKTOP-7GLQTMP-54760-1600257142698-0:1) is starting
+2020-09-16 14:52:23,380 INFO org.apache.activemq.broker.BrokerService [main] Apache ActiveMQ 5.15.12 (localhost, ID:DESKTOP-7GLQTMP-54760-1600257142698-0:1) started
+2020-09-16 14:52:23,381 INFO org.apache.activemq.broker.BrokerService [main] For help or more information please see: http://activemq.apache.org
+2020-09-16 14:52:23,738 INFO org.apache.activemq.broker.TransportConnector [main] Connector vm://localhost started
+2020-09-16 14:52:23,949 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Triggering deferred initialization of Spring Data repositories…
+2020-09-16 14:52:27,132 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Spring Data repositories initialized!
+2020-09-16 14:52:27,199 INFO org.springframework.boot.StartupInfoLogger [main] Started JwtAuthRestControllerTest in 34.649 seconds (JVM running for 37.806)
+2020-09-16 14:52:28,483 WARN com.example.demo.jwt.JwtTokenAuthorizationOncePerRequestFilter [main] JWT TOKEN DOES NOT START WITH BEARER STRING
+2020-09-16 14:52:28,773 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProjectControllerTest on DESKTOP-7GLQTMP with PID 10132 (started by yurat in D:\Projects\Java\demo)
+2020-09-16 14:52:28,775 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: dev
+2020-09-16 14:52:29,646 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2020-09-16 14:52:29,715 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 68ms. Found 3 JPA repository interfaces.
+2020-09-16 14:52:30,403 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@1c2b65cc' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-16 14:52:30,461 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-16 14:52:30,833 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-09-16 14:52:30,886 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-09-16 14:52:30,977 INFO org.hibernate.jpa.internal.util.LogHelper [task-1] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-09-16 14:52:30,993 INFO com.zaxxer.hikari.HikariDataSource [task-1] HikariPool-2 - Starting...
+2020-09-16 14:52:30,996 INFO com.zaxxer.hikari.HikariDataSource [task-1] HikariPool-2 - Start completed.
+2020-09-16 14:52:30,997 INFO org.hibernate.dialect.Dialect [task-1] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-09-16 14:52:31,406 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [task-1] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-09-16 14:52:31,407 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [task-1] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-09-16 14:52:31,563 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-09-16 14:52:32,541 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/authenticate', POST], []
+2020-09-16 14:52:32,542 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/**', OPTIONS], []
+2020-09-16 14:52:32,542 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/', GET], []
+2020-09-16 14:52:32,543 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/h2-console/**/**'], []
+2020-09-16 14:52:32,544 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/user/register'], []
+2020-09-16 14:52:32,832 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5b1420f9, org.springframework.security.web.context.SecurityContextPersistenceFilter@5f0ca069, org.springframework.security.web.header.HeaderWriterFilter@57ed02e6, org.springframework.security.web.authentication.logout.LogoutFilter@54d35ed5, com.example.demo.jwt.JwtTokenAuthorizationOncePerRequestFilter@4738131e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6a6a2fdd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@552ffa44, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@434ee422, org.springframework.security.web.session.SessionManagementFilter@39004e4f, org.springframework.security.web.access.ExceptionTranslationFilter@4fef5792, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5059d398]
+2020-09-16 14:52:33,877 INFO org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testDb'
+2020-09-16 14:52:34,195 INFO org.springframework.mock.web.MockServletContext [main] Initializing Spring TestDispatcherServlet ''
+2020-09-16 14:52:34,200 INFO org.springframework.web.servlet.FrameworkServlet [main] Initializing Servlet ''
+2020-09-16 14:52:34,232 INFO org.springframework.web.servlet.FrameworkServlet [main] Completed initialization in 31 ms
+2020-09-16 14:52:34,276 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Triggering deferred initialization of Spring Data repositories…
+2020-09-16 14:52:34,482 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Spring Data repositories initialized!
+2020-09-16 14:52:34,494 INFO org.springframework.boot.StartupInfoLogger [main] Started ProjectControllerTest in 5.777 seconds (JVM running for 45.101)
+2020-09-16 14:52:35,018 INFO org.springframework.boot.StartupInfoLogger [main] Starting TaskControllerTest on DESKTOP-7GLQTMP with PID 10132 (started by yurat in D:\Projects\Java\demo)
+2020-09-16 14:52:35,019 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: dev
+2020-09-16 14:52:36,668 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2020-09-16 14:52:36,849 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 180ms. Found 3 JPA repository interfaces.
+2020-09-16 14:52:37,535 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@21f479cd' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-16 14:52:37,567 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-16 14:52:37,825 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-09-16 14:52:37,882 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-09-16 14:52:37,945 INFO org.hibernate.jpa.internal.util.LogHelper [task-1] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-09-16 14:52:37,960 INFO com.zaxxer.hikari.HikariDataSource [task-1] HikariPool-3 - Starting...
+2020-09-16 14:52:37,962 INFO com.zaxxer.hikari.HikariDataSource [task-1] HikariPool-3 - Start completed.
+2020-09-16 14:52:37,962 INFO org.hibernate.dialect.Dialect [task-1] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-09-16 14:52:38,169 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [task-1] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-09-16 14:52:38,169 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [task-1] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-09-16 14:52:38,398 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-09-16 14:52:39,242 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/authenticate', POST], []
+2020-09-16 14:52:39,243 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/**', OPTIONS], []
+2020-09-16 14:52:39,243 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/', GET], []
+2020-09-16 14:52:39,244 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/h2-console/**/**'], []
+2020-09-16 14:52:39,245 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/user/register'], []
+2020-09-16 14:52:39,444 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@34065642, org.springframework.security.web.context.SecurityContextPersistenceFilter@f5f8de2, org.springframework.security.web.header.HeaderWriterFilter@68f264bf, org.springframework.security.web.authentication.logout.LogoutFilter@5008559a, com.example.demo.jwt.JwtTokenAuthorizationOncePerRequestFilter@34e9de8d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6baee63b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1002b06d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@c85486, org.springframework.security.web.session.SessionManagementFilter@77988c45, org.springframework.security.web.access.ExceptionTranslationFilter@3cab07dd, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@276aa33f]
+2020-09-16 14:52:40,441 INFO org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testDb'
+2020-09-16 14:52:40,799 INFO org.springframework.mock.web.MockServletContext [main] Initializing Spring TestDispatcherServlet ''
+2020-09-16 14:52:40,800 INFO org.springframework.web.servlet.FrameworkServlet [main] Initializing Servlet ''
+2020-09-16 14:52:40,833 INFO org.springframework.web.servlet.FrameworkServlet [main] Completed initialization in 32 ms
+2020-09-16 14:52:40,884 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Triggering deferred initialization of Spring Data repositories…
+2020-09-16 14:52:41,060 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Spring Data repositories initialized!
+2020-09-16 14:52:41,066 INFO org.springframework.boot.StartupInfoLogger [main] Started TaskControllerTest in 6.12 seconds (JVM running for 51.673)
+2020-09-16 14:52:41,417 INFO org.springframework.boot.StartupInfoLogger [main] Starting UserControllerTest on DESKTOP-7GLQTMP with PID 10132 (started by yurat in D:\Projects\Java\demo)
+2020-09-16 14:52:41,418 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: dev
+2020-09-16 14:52:42,271 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2020-09-16 14:52:42,383 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 108ms. Found 3 JPA repository interfaces.
+2020-09-16 14:52:42,950 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@2a525f88' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-16 14:52:42,984 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-16 14:52:43,205 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-09-16 14:52:43,255 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-09-16 14:52:43,296 INFO org.hibernate.jpa.internal.util.LogHelper [task-1] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-09-16 14:52:43,307 INFO com.zaxxer.hikari.HikariDataSource [task-1] HikariPool-4 - Starting...
+2020-09-16 14:52:43,309 INFO com.zaxxer.hikari.HikariDataSource [task-1] HikariPool-4 - Start completed.
+2020-09-16 14:52:43,310 INFO org.hibernate.dialect.Dialect [task-1] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-09-16 14:52:43,501 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [task-1] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-09-16 14:52:43,503 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [task-1] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-09-16 14:52:43,635 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-09-16 14:52:44,209 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/authenticate', POST], []
+2020-09-16 14:52:44,210 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/**', OPTIONS], []
+2020-09-16 14:52:44,211 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/', GET], []
+2020-09-16 14:52:44,211 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/h2-console/**/**'], []
+2020-09-16 14:52:44,212 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/user/register'], []
+2020-09-16 14:52:44,400 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@740fccd2, org.springframework.security.web.context.SecurityContextPersistenceFilter@3810806c, org.springframework.security.web.header.HeaderWriterFilter@70940cb8, org.springframework.security.web.authentication.logout.LogoutFilter@67b20b4c, com.example.demo.jwt.JwtTokenAuthorizationOncePerRequestFilter@33bf2602, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2b76ecd5, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7bd7c4cf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1ae23815, org.springframework.security.web.session.SessionManagementFilter@47fce2c4, org.springframework.security.web.access.ExceptionTranslationFilter@1640a6b5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7da1ef46]
+2020-09-16 14:52:45,216 INFO org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testDb'
+2020-09-16 14:52:45,426 INFO org.springframework.mock.web.MockServletContext [main] Initializing Spring TestDispatcherServlet ''
+2020-09-16 14:52:45,427 INFO org.springframework.web.servlet.FrameworkServlet [main] Initializing Servlet ''
+2020-09-16 14:52:45,446 INFO org.springframework.web.servlet.FrameworkServlet [main] Completed initialization in 19 ms
+2020-09-16 14:52:45,524 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Triggering deferred initialization of Spring Data repositories…
+2020-09-16 14:52:45,762 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Spring Data repositories initialized!
+2020-09-16 14:52:45,767 INFO org.springframework.boot.StartupInfoLogger [main] Started UserControllerTest in 4.403 seconds (JVM running for 56.374)
+2020-09-16 14:52:46,454 INFO org.apache.activemq.broker.BrokerService [ActiveMQ ShutdownHook] Apache ActiveMQ 5.15.12 (localhost, ID:DESKTOP-7GLQTMP-54760-1600257142698-0:1) is shutting down
+2020-09-16 14:52:46,567 INFO org.springframework.jms.connection.SingleConnectionFactory [ActiveMQ Connection Executor: vm://localhost#0] Encountered a JMSException - resetting the underlying JMS Connection
+javax.jms.JMSException: peer (vm://localhost#1) stopped.
+	at org.apache.activemq.util.JMSExceptionSupport.create(JMSExceptionSupport.java:54)
+	at org.apache.activemq.ActiveMQConnection.onAsyncException(ActiveMQConnection.java:1960)
+	at org.apache.activemq.ActiveMQConnection.onException(ActiveMQConnection.java:1979)
+	at org.apache.activemq.transport.TransportFilter.onException(TransportFilter.java:114)
+	at org.apache.activemq.transport.ResponseCorrelator.onException(ResponseCorrelator.java:126)
+	at org.apache.activemq.transport.TransportFilter.onException(TransportFilter.java:114)
+	at org.apache.activemq.transport.vm.VMTransport.stop(VMTransport.java:233)
+	at org.apache.activemq.transport.TransportFilter.stop(TransportFilter.java:72)
+	at org.apache.activemq.transport.TransportFilter.stop(TransportFilter.java:72)
+	at org.apache.activemq.transport.ResponseCorrelator.stop(ResponseCorrelator.java:132)
+	at org.apache.activemq.broker.TransportConnection.doStop(TransportConnection.java:1194)
+	at org.apache.activemq.broker.TransportConnection$4.run(TransportConnection.java:1160)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.activemq.transport.TransportDisposedIOException: peer (vm://localhost#1) stopped.
+	... 9 common frames omitted
+2020-09-16 14:52:46,587 WARN org.apache.activemq.broker.TransportConnection [SpringContextShutdownHook] Transport Connection to: vm://localhost#6 failed: org.apache.activemq.transport.TransportDisposedIOException: peer (vm://localhost#6) stopped.
+2020-09-16 14:52:46,588 WARN org.apache.activemq.broker.TransportConnection [SpringContextShutdownHook] Transport Connection to: vm://localhost#2 failed: org.apache.activemq.transport.TransportDisposedIOException: peer (vm://localhost#2) stopped.
+2020-09-16 14:52:46,591 WARN org.springframework.jms.connection.SingleConnectionFactory [SpringContextShutdownHook] Could not close shared JMS Connection
+javax.jms.JMSException: Disposed due to prior exception
+	at org.apache.activemq.util.JMSExceptionSupport.create(JMSExceptionSupport.java:54)
+	at org.apache.activemq.ActiveMQConnection.syncSendPacket(ActiveMQConnection.java:1403)
+	at org.apache.activemq.ActiveMQConnection.close(ActiveMQConnection.java:688)
+	at org.springframework.jms.connection.SingleConnectionFactory.closeConnection(SingleConnectionFactory.java:501)
+	at org.springframework.jms.connection.SingleConnectionFactory.resetConnection(SingleConnectionFactory.java:389)
+	at org.springframework.jms.connection.CachingConnectionFactory.resetConnection(CachingConnectionFactory.java:205)
+	at org.springframework.jms.connection.SingleConnectionFactory.destroy(SingleConnectionFactory.java:379)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:258)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:579)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:551)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1089)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:512)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1082)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1061)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1030)
+	at org.springframework.context.support.AbstractApplicationContext$1.run(AbstractApplicationContext.java:949)
+Caused by: org.apache.activemq.transport.TransportDisposedIOException: Disposed due to prior exception
+	at org.apache.activemq.transport.ResponseCorrelator.onException(ResponseCorrelator.java:125)
+	at org.apache.activemq.transport.TransportFilter.onException(TransportFilter.java:114)
+	at org.apache.activemq.transport.vm.VMTransport.iterate(VMTransport.java:278)
+	at org.apache.activemq.thread.PooledTaskRunner.runTask(PooledTaskRunner.java:133)
+	at org.apache.activemq.thread.PooledTaskRunner$1.run(PooledTaskRunner.java:48)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: Broker BrokerService[localhost] is being stopped
+	at org.apache.activemq.util.IOExceptionSupport.create(IOExceptionSupport.java:46)
+	... 6 common frames omitted
+Caused by: org.apache.activemq.broker.BrokerStoppedException: Broker BrokerService[localhost] is being stopped
+	at org.apache.activemq.broker.TransportConnection$1.onCommand(TransportConnection.java:205)
+	at org.apache.activemq.transport.ResponseCorrelator.onCommand(ResponseCorrelator.java:116)
+	at org.apache.activemq.transport.MutexTransport.onCommand(MutexTransport.java:50)
+	at org.apache.activemq.transport.vm.VMTransport.iterate(VMTransport.java:275)
+	... 5 common frames omitted
+2020-09-16 14:52:46,591 WARN org.springframework.jms.connection.SingleConnectionFactory [SpringContextShutdownHook] Could not close shared JMS Connection
+javax.jms.JMSException: Disposed due to prior exception
+	at org.apache.activemq.util.JMSExceptionSupport.create(JMSExceptionSupport.java:54)
+	at org.apache.activemq.ActiveMQConnection.syncSendPacket(ActiveMQConnection.java:1403)
+	at org.apache.activemq.ActiveMQConnection.close(ActiveMQConnection.java:688)
+	at org.springframework.jms.connection.SingleConnectionFactory.closeConnection(SingleConnectionFactory.java:501)
+	at org.springframework.jms.connection.SingleConnectionFactory.resetConnection(SingleConnectionFactory.java:389)
+	at org.springframework.jms.connection.CachingConnectionFactory.resetConnection(CachingConnectionFactory.java:205)
+	at org.springframework.jms.connection.SingleConnectionFactory.destroy(SingleConnectionFactory.java:379)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:258)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:579)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:551)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1089)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:512)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1082)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1061)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1030)
+	at org.springframework.context.support.AbstractApplicationContext$1.run(AbstractApplicationContext.java:949)
+Caused by: org.apache.activemq.transport.TransportDisposedIOException: Disposed due to prior exception
+	at org.apache.activemq.transport.ResponseCorrelator.onException(ResponseCorrelator.java:125)
+	at org.apache.activemq.transport.TransportFilter.onException(TransportFilter.java:114)
+	at org.apache.activemq.transport.vm.VMTransport.iterate(VMTransport.java:278)
+	at org.apache.activemq.thread.PooledTaskRunner.runTask(PooledTaskRunner.java:133)
+	at org.apache.activemq.thread.PooledTaskRunner$1.run(PooledTaskRunner.java:48)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: Broker BrokerService[localhost] is being stopped
+	at org.apache.activemq.util.IOExceptionSupport.create(IOExceptionSupport.java:46)
+	... 6 common frames omitted
+Caused by: org.apache.activemq.broker.BrokerStoppedException: Broker BrokerService[localhost] is being stopped
+	at org.apache.activemq.broker.TransportConnection$1.onCommand(TransportConnection.java:205)
+	at org.apache.activemq.transport.ResponseCorrelator.onCommand(ResponseCorrelator.java:116)
+	at org.apache.activemq.transport.MutexTransport.onCommand(MutexTransport.java:50)
+	at org.apache.activemq.transport.vm.VMTransport.iterate(VMTransport.java:275)
+	... 5 common frames omitted
+2020-09-16 14:52:46,591 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringContextShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-09-16 14:52:46,592 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringContextShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-09-16 14:52:46,624 WARN org.springframework.jms.connection.SingleConnectionFactory [ActiveMQ Connection Executor: vm://localhost#0] Could not close shared JMS Connection
+javax.jms.JMSException: Disposed due to prior exception
+	at org.apache.activemq.util.JMSExceptionSupport.create(JMSExceptionSupport.java:72)
+	at org.apache.activemq.ActiveMQConnection.syncSendPacket(ActiveMQConnection.java:1421)
+	at org.apache.activemq.ActiveMQConnection.close(ActiveMQConnection.java:688)
+	at org.springframework.jms.connection.SingleConnectionFactory.closeConnection(SingleConnectionFactory.java:501)
+	at org.springframework.jms.connection.SingleConnectionFactory.resetConnection(SingleConnectionFactory.java:389)
+	at org.springframework.jms.connection.CachingConnectionFactory.resetConnection(CachingConnectionFactory.java:205)
+	at org.springframework.jms.connection.SingleConnectionFactory.onException(SingleConnectionFactory.java:367)
+	at org.springframework.jms.connection.SingleConnectionFactory$AggregatedExceptionListener.onException(SingleConnectionFactory.java:721)
+	at org.apache.activemq.ActiveMQConnection$5.run(ActiveMQConnection.java:1967)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.activemq.transport.TransportDisposedIOException: Disposed due to prior exception
+	at org.apache.activemq.transport.ResponseCorrelator.onException(ResponseCorrelator.java:125)
+	at org.apache.activemq.transport.TransportFilter.onException(TransportFilter.java:114)
+	at org.apache.activemq.transport.vm.VMTransport.stop(VMTransport.java:233)
+	at org.apache.activemq.transport.TransportFilter.stop(TransportFilter.java:72)
+	at org.apache.activemq.transport.TransportFilter.stop(TransportFilter.java:72)
+	at org.apache.activemq.transport.ResponseCorrelator.stop(ResponseCorrelator.java:132)
+	at org.apache.activemq.broker.TransportConnection.doStop(TransportConnection.java:1194)
+	at org.apache.activemq.broker.TransportConnection$4.run(TransportConnection.java:1160)
+	... 3 common frames omitted
+Caused by: org.apache.activemq.transport.TransportDisposedIOException: peer (vm://localhost#1) stopped.
+	... 9 common frames omitted
+2020-09-16 14:52:46,626 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'taskScheduler'
+2020-09-16 14:52:46,627 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'taskScheduler'
+2020-09-16 14:52:46,627 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2020-09-16 14:52:46,628 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2020-09-16 14:52:46,629 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringContextShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-09-16 14:52:46,629 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-2 - Shutdown initiated...
+2020-09-16 14:52:46,629 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-4 - Shutdown initiated...
+2020-09-16 14:52:46,632 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'taskScheduler'
+2020-09-16 14:52:46,633 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2020-09-16 14:52:46,634 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-1 - Shutdown initiated...
+2020-09-16 14:52:46,632 INFO org.springframework.jms.connection.SingleConnectionFactory [ActiveMQ Connection Executor: vm://localhost#4] Encountered a JMSException - resetting the underlying JMS Connection
+javax.jms.JMSException: peer (vm://localhost#5) stopped.
+	at org.apache.activemq.util.JMSExceptionSupport.create(JMSExceptionSupport.java:54)
+	at org.apache.activemq.ActiveMQConnection.onAsyncException(ActiveMQConnection.java:1960)
+	at org.apache.activemq.ActiveMQConnection.onException(ActiveMQConnection.java:1979)
+	at org.apache.activemq.transport.TransportFilter.onException(TransportFilter.java:114)
+	at org.apache.activemq.transport.ResponseCorrelator.onException(ResponseCorrelator.java:126)
+	at org.apache.activemq.transport.TransportFilter.onException(TransportFilter.java:114)
+	at org.apache.activemq.transport.vm.VMTransport.stop(VMTransport.java:233)
+	at org.apache.activemq.transport.TransportFilter.stop(TransportFilter.java:72)
+	at org.apache.activemq.transport.TransportFilter.stop(TransportFilter.java:72)
+	at org.apache.activemq.transport.ResponseCorrelator.stop(ResponseCorrelator.java:132)
+	at org.apache.activemq.broker.TransportConnection.doStop(TransportConnection.java:1194)
+	at org.apache.activemq.broker.TransportConnection$4.run(TransportConnection.java:1160)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.activemq.transport.TransportDisposedIOException: peer (vm://localhost#5) stopped.
+	... 9 common frames omitted
+2020-09-16 14:52:46,637 WARN org.springframework.jms.listener.DefaultMessageListenerContainer [DefaultMessageListenerContainer-1] Setup of JMS message listener invoker failed for destination 'mail' - trying to recover. Cause: The Session is closed
+2020-09-16 14:52:46,639 INFO org.apache.activemq.broker.TransportConnector [ActiveMQ ShutdownHook] Connector vm://localhost stopped
+2020-09-16 14:52:46,643 WARN org.springframework.jms.connection.SingleConnectionFactory [ActiveMQ Connection Executor: vm://localhost#4] Could not close shared JMS Connection
+javax.jms.JMSException: Disposed due to prior exception
+	at org.apache.activemq.util.JMSExceptionSupport.create(JMSExceptionSupport.java:72)
+	at org.apache.activemq.ActiveMQConnection.syncSendPacket(ActiveMQConnection.java:1421)
+	at org.apache.activemq.ActiveMQConnection.close(ActiveMQConnection.java:688)
+	at org.springframework.jms.connection.SingleConnectionFactory.closeConnection(SingleConnectionFactory.java:501)
+	at org.springframework.jms.connection.SingleConnectionFactory.resetConnection(SingleConnectionFactory.java:389)
+	at org.springframework.jms.connection.CachingConnectionFactory.resetConnection(CachingConnectionFactory.java:205)
+	at org.springframework.jms.connection.SingleConnectionFactory.onException(SingleConnectionFactory.java:367)
+	at org.springframework.jms.connection.SingleConnectionFactory$AggregatedExceptionListener.onException(SingleConnectionFactory.java:721)
+	at org.apache.activemq.ActiveMQConnection$5.run(ActiveMQConnection.java:1967)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.activemq.transport.TransportDisposedIOException: Disposed due to prior exception
+	at org.apache.activemq.transport.ResponseCorrelator.onException(ResponseCorrelator.java:125)
+	at org.apache.activemq.transport.TransportFilter.onException(TransportFilter.java:114)
+	at org.apache.activemq.transport.vm.VMTransport.stop(VMTransport.java:233)
+	at org.apache.activemq.transport.TransportFilter.stop(TransportFilter.java:72)
+	at org.apache.activemq.transport.TransportFilter.stop(TransportFilter.java:72)
+	at org.apache.activemq.transport.ResponseCorrelator.stop(ResponseCorrelator.java:132)
+	at org.apache.activemq.broker.TransportConnection.doStop(TransportConnection.java:1194)
+	at org.apache.activemq.broker.TransportConnection$4.run(TransportConnection.java:1160)
+	... 3 common frames omitted
+Caused by: org.apache.activemq.transport.TransportDisposedIOException: peer (vm://localhost#5) stopped.
+	... 9 common frames omitted
+2020-09-16 14:52:46,646 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-1 - Shutdown completed.
+2020-09-16 14:52:46,646 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-4 - Shutdown completed.
+2020-09-16 14:52:46,881 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-2 - Shutdown completed.
+2020-09-16 14:52:46,883 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringContextShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-09-16 14:52:46,889 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'taskScheduler'
+2020-09-16 14:52:46,890 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2020-09-16 14:52:46,890 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-3 - Shutdown initiated...
+2020-09-16 14:52:46,891 INFO com.zaxxer.hikari.HikariDataSource [SpringContextShutdownHook] HikariPool-3 - Shutdown completed.
+2020-09-16 14:52:46,987 INFO org.apache.activemq.broker.BrokerService [ActiveMQ ShutdownHook] Apache ActiveMQ 5.15.12 (localhost, ID:DESKTOP-7GLQTMP-54760-1600257142698-0:1) uptime 24.954 seconds
+2020-09-16 14:52:46,987 INFO org.apache.activemq.broker.BrokerService [ActiveMQ ShutdownHook] Apache ActiveMQ 5.15.12 (localhost, ID:DESKTOP-7GLQTMP-54760-1600257142698-0:1) is shutdown
