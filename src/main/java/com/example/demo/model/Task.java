@@ -121,7 +121,8 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", createDate=" + createDate +
                 ", finishDate=" + finishDate +
-                ", user=" +
+                ", isActive=" + isActive +
+                ", priority=" + priority +
                 '}';
     }
 }

@@ -32,7 +32,6 @@ public class ProjectController {
     public ResponseEntity<Project> saveProject(@ModelAttribute Project project) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         User user = userService.getByUsername(authentication.getName())
                 .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
         project.setUserList(Collections.singletonList(user));

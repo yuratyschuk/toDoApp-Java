@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -39,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles(profiles = "prod")
 public class TaskControllerTest {
 
 
@@ -233,7 +235,7 @@ public class TaskControllerTest {
 
     @Test
     public void putUpdateTaskPriority() throws Exception {
-        willDoNothing().given(taskService).updatePriority(1, 1);
+        given(taskService.updatePriority(1, 1)).willReturn(taskList.get(0));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/tasks/priority/{taskId}", 1)
                 .with(user("test").password("test"))

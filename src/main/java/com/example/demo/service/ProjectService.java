@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.AlreadySharedException;
 import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
@@ -66,12 +67,11 @@ public class ProjectService {
         }
 
 
-        Optional<Project> projectOptional = getById(projectId);
-        Project project = projectOptional
+        Project project = getById(projectId)
                 .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId));
 
         if (project.getUserList().contains(user)) {
-            throw new Exception("Project already shared: " + project.getName());
+            throw new AlreadySharedException("Project already shared: " + project.getName());
         }
 
         project.setUserList(Collections.singletonList(user));

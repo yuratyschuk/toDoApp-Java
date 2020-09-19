@@ -1,9 +1,9 @@
 INSERT INTO users(id, username, first_name, last_name, registration_date, password, email)
-VALUES (1, 'first user', 'Yura', 'First last name', sysdate(), 'password', 'yuratyschuk4@gmail.com'),
-       (2, 'second user', 'Liza', 'Second last name', sysdate(), 'password', 'yuratyschuk3@gmail.com'),
-       (3, 'third user', 'Anton', 'Third last name', sysdate(), 'password', 'yuratyschuk2@gmail.com'),
-        (4, 'test', 'test', 'test', sysdate(), '$2a$10$UL0oHA21nLWCrUknMKamR.sstth5KgFA6qukhoNbRH4pKXPlLYDXO', 'yuratyschuk@gmail.com'),
-        (5, 'test1', 'test', 'test', sysdate(), '$2a$10$UL0oHA21nLWCrUknMKamR.sstth5KgFA6qukhoNbRH4pKXPlLYDXO', 'yuratyschuk1@gmail.com');
+VALUES (1, 'firstUser', 'Yura', 'First last name', sysdate(), 'password', 'test4@gmail.com'),
+       (2, 'secondUser', 'Liza', 'Second last name', sysdate(), 'password', 'test3@gmail.com'),
+       (3, 'thirdUser', 'Anton', 'Third last name', sysdate(), 'password', 'test2@gmail.com'),
+        (4, 'test', 'test', 'test', sysdate(), '$2a$10$UL0oHA21nLWCrUknMKamR.sstth5KgFA6qukhoNbRH4pKXPlLYDXO', 'test@gmail.com'),
+        (5, 'test1', 'test', 'test', sysdate(), '$2a$10$UL0oHA21nLWCrUknMKamR.sstth5KgFA6qukhoNbRH4pKXPlLYDXO', 'test5@gmail.com');
 
 INSERT INTO project(id, name)
 VALUES(1, 'Java Project'),

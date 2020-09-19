@@ -65,10 +65,10 @@ public class TaskService {
     public Task changeStatus(Task task) {
         task.setActive(!task.isActive());
 
-        return task;
+        return save(task);
     }
 
-    public void updatePriority(int priority, int taskId) {
-        taskRepository.updatePriority(priority, taskId);
+    public Task updatePriority(int priority, int taskId) {
+        return taskRepository.updatePriority(priority, taskId);
     }
 }
