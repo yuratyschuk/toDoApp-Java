@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.exception.DataNotFoundException;
+import com.example.demo.exception.ValidationException;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import com.example.demo.service.ProjectService;
@@ -10,9 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/projects")
@@ -29,7 +33,10 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<Project> saveProject(@ModelAttribute Project project) {
+    public ResponseEntity<Project> saveProject(@Valid @RequestBody Project project, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(Objects.requireNonNull(bindingResult.getFieldError().toString()));
+        }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.getByUsername(authentication.getName())
@@ -66,7 +73,7 @@ public class ProjectController {
     public ResponseEntity<Project> getProject(@PathVariable("projectId") int projectId) {
 
         return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getById(projectId)
-        .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId)));
+                .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId)));
     }
 
     @GetMapping(value = "/getAll")

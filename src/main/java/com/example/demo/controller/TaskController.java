@@ -1,15 +1,23 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.AlreadySharedException;
 import com.example.demo.exception.DataNotFoundException;
+import com.example.demo.exception.ValidationException;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.TaskService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/tasks")
@@ -18,6 +26,8 @@ public class TaskController {
     private final TaskService taskService;
 
     private final ProjectService projectService;
+
+    private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     public TaskController(TaskService taskService, ProjectService projectService) {
@@ -33,12 +43,18 @@ public class TaskController {
 
     @PostMapping(value = "/save/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Task> saveTask(@RequestBody Task task, @PathVariable("projectId") int projectId) {
+    public ResponseEntity<Task> saveTask(@Valid @RequestBody Task task, BindingResult bindingResult,
+                                         @PathVariable("projectId") int projectId) {
+
 
         Project project = projectService.getById(projectId)
                 .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId));
         task.setProject(project);
-        task.setActive(true);
+
+        if(bindingResult.hasErrors()) {
+            throw new ValidationException(Objects.requireNonNull(bindingResult.getFieldError()).toString());
+        }
+
 
         return ResponseEntity.status(HttpStatus.OK).body(taskService.save(task));
     }
@@ -84,7 +100,7 @@ public class TaskController {
 
     @GetMapping(value = "/active/{taskId}/{projectId}")
     public ResponseEntity<Iterable<Task>> getTaskByStatus(@RequestParam("isActive") String isActive,
-                                                      @PathVariable("projectId") int projectId) {
+                                                          @PathVariable("projectId") int projectId) {
 
         return ResponseEntity.status(HttpStatus.FOUND).body(taskService.getTaskByProjectIdAndActive(projectId,
                 Boolean.parseBoolean(isActive)));

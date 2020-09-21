@@ -1,11 +1,13 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.HashSet;
@@ -13,7 +15,6 @@ import java.util.Set;
 
 @Entity(name = "users")
 @Table(name = "users")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +40,8 @@ public class User {
     private Date registrationDate;
 
     @NotEmpty
+    @Email
     private String email;
-
 
     @ManyToMany(mappedBy = "userList")
     @OnDelete(action = OnDeleteAction.CASCADE)

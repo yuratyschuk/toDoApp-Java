@@ -31,6 +31,11 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         return buildResponseEntity((new ErrorModel(HttpStatus.BAD_REQUEST, e)));
     }
 
+    @ExceptionHandler({ValidationException.class})
+    public ResponseEntity<?> handleValidationException(ValidationException e) {
+        return buildResponseEntity(new ErrorModel(HttpStatus.BAD_REQUEST, e));
+    }
+
     private ResponseEntity<?> buildResponseEntity(ErrorModel errorModel) {
         return new ResponseEntity<>(errorModel, errorModel.getStatus());
     }

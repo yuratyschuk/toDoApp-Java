@@ -45,7 +45,7 @@ public class UserService {
 
     public User save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
+        user.setRepeatedPassword("null");
         return userRepository.save(user);
     }
 
@@ -84,7 +84,7 @@ public class UserService {
         for (Task task : taskList) {
             if (task.getFinishDate() != null && date.compareTo(task.getFinishDate()) > 0) {
                 configureEmailBeforeSending(task);
-                ;
+
             }
         }
     }

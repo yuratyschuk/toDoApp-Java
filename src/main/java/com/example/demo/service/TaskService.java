@@ -25,11 +25,13 @@ public class TaskService {
     }
 
     public Task save(Task task) {
+        task.setActive(true);
         task.setCreateDate(new Date());
 
-        if(task.getPriority() == -1) {
-            task.setPriority(0);
+        if(task.getPriority() == 0) {
+            task.setPriority(1);
         }
+
 
         return taskRepository.save(task);
     }

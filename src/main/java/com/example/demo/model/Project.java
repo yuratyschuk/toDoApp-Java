@@ -20,10 +20,8 @@ public class Project {
     @NotEmpty
     public String name;
 
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "project_id")
-
     public List<Task> taskList;
 
     @ManyToMany

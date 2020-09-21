@@ -64,23 +64,34 @@ public class TaskServiceTest {
     }
 
     @Test
-    public void testTaskSave() {
-        task.setPriority(-1);
+    public void testTaskSave_Priority2() {
         given(taskRepository.save(any(Task.class))).willReturn(task);
 
         Task savedTask = taskService.save(task);
 
-        assertEquals(0, savedTask.getPriority());
+        assertEquals(2, savedTask.getPriority());
+        assertNotNull(task.getCreateDate());
+    }
+
+
+    @Test
+    public void testTaskSave_Priority0_WillChange1() {
+        task.setPriority(0);
+        given(taskRepository.save(any(Task.class))).willReturn(task);
+
+        Task savedTask = taskService.save(task);
+
+        assertEquals(1, savedTask.getPriority());
         assertNotNull(task.getCreateDate());
     }
 
     @Test
     public void testChangeStatus() {
         given(taskRepository.save(any(Task.class))).willReturn(task);
-
         Task changedStatusTask = taskService.changeStatus(task);
-
+        changedStatusTask.setActive(!changedStatusTask.isActive());
         assertFalse(changedStatusTask.isActive());
+        verify(taskRepository, times(1)).save(task);
     }
 
     @Test

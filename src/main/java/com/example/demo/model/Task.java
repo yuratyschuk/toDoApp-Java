@@ -24,7 +24,6 @@ public class Task {
     private String description;
 
     @Column(name = "create_date")
-    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
     private Date createDate;
 
@@ -33,16 +32,13 @@ public class Task {
     private Date finishDate;
 
     @Column(name = "active")
-    @NotNull
     private boolean isActive;
 
-    @NotNull
     @Min(0)
     @Max(3)
     private int priority;
 
     @ManyToOne
-    @NotNull
     @JsonIgnore
     private Project project;
 

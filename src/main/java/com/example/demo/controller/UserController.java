@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.exception.DataNotFoundException;
+import com.example.demo.exception.ValidationException;
 import com.example.demo.jms.JmsService;
 import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.User;
@@ -11,7 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -43,10 +48,12 @@ public class    UserController {
 
 
     @PostMapping(value = "/register")
-    public ResponseEntity<User> saveUser(@RequestBody User user) {
+    public ResponseEntity<User> saveUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            throw new ValidationException(bindingResult.getFieldError().toString());
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        kafkaService.sendMessageAboutUser(user);
-
+//        kafkaService.sendMessageAboutUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
