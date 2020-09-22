@@ -671,3 +671,57 @@ Caused by: io.jsonwebtoken.impl.lang.UnavailableImplementationException: Unable 
 2020-09-21 13:01:41,970 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
 2020-09-21 13:01:41,970 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
 2020-09-21 13:01:41,981 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 11 ms
+2020-09-21 13:02:44,951 INFO org.springframework.boot.StartupInfoLogger [main] Starting DemoApplication on DESKTOP-7GLQTMP with PID 11248 (D:\Projects\Java\demo\target\classes started by yurat in D:\Projects\Java\demo)
+2020-09-21 13:02:44,960 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: dev
+2020-09-21 13:02:46,422 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2020-09-21 13:02:46,495 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 64ms. Found 3 JPA repository interfaces.
+2020-09-21 13:02:46,988 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@15dc339f' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-21 13:02:46,995 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-09-21 13:02:47,251 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2020-09-21 13:02:47,258 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2020-09-21 13:02:47,259 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2020-09-21 13:02:47,260 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-09-21 13:02:47,576 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2020-09-21 13:02:47,577 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2455 ms
+2020-09-21 13:02:47,655 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2020-09-21 13:02:47,772 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2020-09-21 13:02:47,781 INFO org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testDb'
+2020-09-21 13:02:48,036 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-09-21 13:02:48,052 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-09-21 13:02:48,100 INFO org.hibernate.jpa.internal.util.LogHelper [task-1] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-09-21 13:02:48,165 INFO org.hibernate.Version [task-1] HHH000412: Hibernate ORM core version 5.4.17.Final
+2020-09-21 13:02:48,273 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-09-21 13:02:48,330 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [task-1] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-09-21 13:02:48,465 INFO org.hibernate.dialect.Dialect [task-1] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2020-09-21 13:02:49,149 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/authenticate', POST], []
+2020-09-21 13:02:49,150 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/**', OPTIONS], []
+2020-09-21 13:02:49,150 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/', GET], []
+2020-09-21 13:02:49,150 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/h2-console/**/**'], []
+2020-09-21 13:02:49,151 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/user/register'], []
+2020-09-21 13:02:49,151 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/v2/api-docs'], []
+2020-09-21 13:02:49,152 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/configuration/ui'], []
+2020-09-21 13:02:49,152 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2020-09-21 13:02:49,152 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/configuration/security'], []
+2020-09-21 13:02:49,152 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/swagger-ui.html'], []
+2020-09-21 13:02:49,153 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: Ant [pattern='/webjars/**'], []
+2020-09-21 13:02:49,204 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7243145f, org.springframework.security.web.context.SecurityContextPersistenceFilter@32256e68, org.springframework.security.web.header.HeaderWriterFilter@51a16adf, org.springframework.security.web.authentication.logout.LogoutFilter@ce12fbb, com.example.demo.jwt.JwtTokenAuthorizationOncePerRequestFilter@7be1ce6a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@353f472a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@67d4c48d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@15c6027d, org.springframework.security.web.session.SessionManagementFilter@2be818da, org.springframework.security.web.access.ExceptionTranslationFilter@69c532af, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@19dc0d32]
+2020-09-21 13:02:49,245 INFO springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [main] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-09-21 13:02:49,469 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [task-1] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-09-21 13:02:49,478 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [task-1] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-09-21 13:02:49,945 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2020-09-21 13:02:49,968 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2020-09-21 13:02:49,969 INFO springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [main] Context refreshed
+2020-09-21 13:02:49,988 INFO springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [main] Found 1 custom documentation plugin(s)
+2020-09-21 13:02:50,022 INFO springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [main] Scanning for api listing references
+2020-09-21 13:02:50,361 INFO org.apache.activemq.broker.BrokerService [main] Using Persistence Adapter: MemoryPersistenceAdapter
+2020-09-21 13:02:50,363 INFO org.apache.activemq.broker.jmx.ManagementContext$1 [JMX connector] JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+2020-09-21 13:02:50,501 INFO org.apache.activemq.broker.BrokerService [main] Apache ActiveMQ 5.15.12 (localhost, ID:DESKTOP-7GLQTMP-57137-1600682570368-0:1) is starting
+2020-09-21 13:02:50,504 INFO org.apache.activemq.broker.BrokerService [main] Apache ActiveMQ 5.15.12 (localhost, ID:DESKTOP-7GLQTMP-57137-1600682570368-0:1) started
+2020-09-21 13:02:50,505 INFO org.apache.activemq.broker.BrokerService [main] For help or more information please see: http://activemq.apache.org
+2020-09-21 13:02:50,534 INFO org.apache.activemq.broker.TransportConnector [main] Connector vm://localhost started
+2020-09-21 13:02:50,571 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Triggering deferred initialization of Spring Data repositories…
+2020-09-21 13:02:50,906 INFO org.springframework.data.repository.config.DeferredRepositoryInitializationListener [main] Spring Data repositories initialized!
+2020-09-21 13:02:50,918 INFO org.springframework.boot.StartupInfoLogger [main] Started DemoApplication in 6.811 seconds (JVM running for 8.689)
+2020-09-21 13:02:55,639 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-09-21 13:02:55,639 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2020-09-21 13:02:55,654 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 14 ms
