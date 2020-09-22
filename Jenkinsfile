@@ -7,8 +7,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn package'
-            }
+                sh 'mvn packae'
+  
+
+ 
         }
         stage('Test') {
             steps {
