@@ -134,20 +134,20 @@ public class ProjectServiceTest {
 
     @Test
     public void shareCredentialsUsername() throws Exception {
-        given(userService.getByUsername(anyString())).willReturn(Optional.of(user));
+        given(userService.findByUsername(anyString())).willReturn(Optional.of(user));
         given(projectRepository.findById(anyInt())).willReturn(Optional.of(project));
         given(projectRepository.save(any(Project.class))).willReturn(project);
 
         Project sharedProject = projectService.share("firstUser", 1);
 
-        verify(userService, times(1)).getByUsername("firstUser");
+        verify(userService, times(1)).findByUsername("firstUser");
         assertEquals(sharedProject, project);
     }
 
     @Test(expected = AlreadySharedException.class)
     public void shareProjectCredentialsUsername_ProjectAlreadyShared() throws Exception {
         project.setUserList(Collections.singletonList(user));
-        given(userService.getByUsername(anyString())).willReturn(Optional.of(user));
+        given(userService.findByUsername(anyString())).willReturn(Optional.of(user));
         given(projectRepository.findById(anyInt())).willReturn(Optional.of(project));
         given(projectRepository.save(any(Project.class))).willReturn(project);
 

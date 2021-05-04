@@ -1,4 +1,4 @@
-package com.example.demo.jwt;
+package com.example.demo.security.jwt;
 
 import java.io.Serializable;
 

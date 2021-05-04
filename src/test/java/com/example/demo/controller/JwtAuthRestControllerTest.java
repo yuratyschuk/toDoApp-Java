@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.details.UserDetailsImpl;
-import com.example.demo.details.UserDetailsServiceImpl;
-import com.example.demo.jwt.JwtTokenRequest;
-import com.example.demo.jwt.JwtTokenResponse;
-import com.example.demo.jwt.JwtTokenUtil;
 import com.example.demo.model.User;
+import com.example.demo.security.details.UserDetailsImpl;
+import com.example.demo.security.details.UserDetailsServiceImpl;
+import com.example.demo.security.jwt.JwtTokenRequest;
+import com.example.demo.security.jwt.JwtTokenResponse;
+import com.example.demo.security.jwt.JwtTokenUtil;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -35,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = "prod")
 public class JwtAuthRestControllerTest {
 
     @Autowired

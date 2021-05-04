@@ -1,7 +1,7 @@
-package com.example.demo.jwt;
+package com.example.demo.security.jwt;
 
-import com.example.demo.details.UserDetailsImpl;
-import com.example.demo.details.UserDetailsServiceImpl;
+import com.example.demo.security.details.UserDetailsImpl;
+import com.example.demo.security.details.UserDetailsServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

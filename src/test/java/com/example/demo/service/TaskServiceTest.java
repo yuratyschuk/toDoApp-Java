@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 
@@ -60,7 +61,7 @@ public class TaskServiceTest {
         task.setActive(true);
         task.setPriority(2);
         task.setProject(project);
-        task.setCreateDate(new Date());
+        task.setCreateDate(LocalDateTime.now());
     }
 
     @Test
@@ -96,7 +97,7 @@ public class TaskServiceTest {
 
     @Test
     public void testUpdatePriority() {
-        given(taskRepository.updatePriority(anyInt(), anyInt())).willReturn(task);
+        given(taskRepository.updatePriority(anyInt(), anyInt())).willReturn(1);
 
         taskService.updatePriority(3, 2);
 

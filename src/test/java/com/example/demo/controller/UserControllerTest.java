@@ -1,11 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.details.UserDetailsImpl;
-import com.example.demo.details.UserDetailsServiceImpl;
-import com.example.demo.jms.JmsService;
-import com.example.demo.jwt.JwtTokenUtil;
-import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.User;
+import com.example.demo.security.details.UserDetailsImpl;
+import com.example.demo.security.details.UserDetailsServiceImpl;
+import com.example.demo.security.jwt.JwtTokenUtil;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -18,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -39,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = "prod")
 public class UserControllerTest {
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -49,12 +45,6 @@ public class UserControllerTest {
 
     @MockBean
     private UserService userService;
-
-    @MockBean
-    private KafkaService kafkaService;
-
-    @MockBean
-    private JmsService jmsService;
 
     @MockBean
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -104,7 +94,6 @@ public class UserControllerTest {
 
     @Test
     public void postRegisterUser() throws Exception {
-        willDoNothing().given(kafkaService).sendMessageAboutUser(userList.get(0));
         given(userService.save(any(User.class))).willReturn(userList.get(0));
         given(bCryptPasswordEncoder.encode(anyString())).willReturn("password");
 
@@ -125,8 +114,7 @@ public class UserControllerTest {
 
     @Test
     public void getUserSubscribe() throws Exception {
-        given(userService.getByUsername(anyString())).willReturn(Optional.of(userList.get(0)));
-        willDoNothing().given(jmsService).send(userList.get(0));
+        given(userService.findByUsername(anyString())).willReturn(Optional.of(userList.get(0)));
         String userJson = objectMapper.writeValueAsString(userList.get(0));
 
 

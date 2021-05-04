@@ -1,11 +1,14 @@
 package com.example.demo.service;
 
+import com.example.demo.mapper.TaskMapper;
 import com.example.demo.model.Task;
+import com.example.demo.model.dto.TaskDto;
 import com.example.demo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -13,20 +16,22 @@ import java.util.Optional;
 @Transactional
 public class TaskService {
 
+    private final TaskRepository taskRepository;
 
-    TaskRepository taskRepository;
+    private final UserService userService;
 
-    UserService userService;
+    private final TaskMapper taskMapper;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, UserService userService) {
+    public TaskService(TaskRepository taskRepository, UserService userService, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.userService = userService;
+        this.taskMapper = taskMapper;
     }
 
     public Task save(Task task) {
         task.setActive(true);
-        task.setCreateDate(new Date());
+        task.setCreateDate(LocalDateTime.now());
 
         if(task.getPriority() == 0) {
             task.setPriority(1);
@@ -66,11 +71,25 @@ public class TaskService {
 
     public Task changeStatus(Task task) {
         task.setActive(!task.isActive());
+        update(task);
 
-        return save(task);
+        return task;
     }
 
-    public Task updatePriority(int priority, int taskId) {
+    public Task updateDto(TaskDto taskDto) {
+        Task currentTask = taskMapper.task(taskDto);
+
+        if(taskDto.getFinishDateAsDate() != null) {
+            currentTask.setFinishDate(taskDto.getFinishDateAsDate());
+        }
+        if(taskDto.getCreateDateAsDate() != null) {
+            currentTask.setCreateDate(taskDto.getCreateDateAsDate());
+        }
+
+        return update(currentTask);
+    }
+
+    public Integer updatePriority(int priority, int taskId) {
         return taskRepository.updatePriority(priority, taskId);
     }
 }

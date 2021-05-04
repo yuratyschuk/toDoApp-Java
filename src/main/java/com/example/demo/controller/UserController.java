@@ -2,8 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.exception.ValidationException;
-import com.example.demo.jms.JmsService;
-import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -26,18 +23,10 @@ public class    UserController {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final KafkaService kafkaService;
-
-    private final JmsService jmsService;
-
-
     @Autowired
-    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder,
-                          KafkaService kafkaService, JmsService jmsService) {
+    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.kafkaService = kafkaService;
-        this.jmsService = jmsService;
     }
 
 
@@ -53,16 +42,14 @@ public class    UserController {
             throw new ValidationException(bindingResult.getFieldError().toString());
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        kafkaService.sendMessageAboutUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
     @GetMapping(value = "/subscribe")
     public ResponseEntity<?> subscribeUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getByUsername(authentication.getName())
+        User user = userService.findByUsername(authentication.getName())
                 .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
-        jmsService.send(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }

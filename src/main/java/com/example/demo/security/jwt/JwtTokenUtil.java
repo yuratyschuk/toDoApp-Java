@@ -1,6 +1,6 @@
-package com.example.demo.jwt;
+package com.example.demo.security.jwt;
 
-import com.example.demo.details.UserDetailsImpl;
+import com.example.demo.security.details.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
@@ -33,10 +33,6 @@ public class JwtTokenUtil implements Serializable {
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
-    }
-
-    public Date getIssuedAtDateFromToken(String token) {
-        return getClaimFromToken(token, Claims::getIssuedAt);
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -91,7 +87,7 @@ public class JwtTokenUtil implements Serializable {
 
     public Boolean validateToken(String token, UserDetailsImpl userDetails) {
         final String username = getUsernameFromToken(token);
-        return (username.equals(((UserDetailsImpl) userDetails).getUsername()) && !isTokenExpired(token));
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private Date calculateExpirationDate(Date createdDate) {

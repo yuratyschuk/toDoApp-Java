@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.details.UserDetailsImpl;
-import com.example.demo.details.UserDetailsServiceImpl;
-import com.example.demo.jwt.JwtTokenUtil;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
+import com.example.demo.security.details.UserDetailsImpl;
+import com.example.demo.security.details.UserDetailsServiceImpl;
+import com.example.demo.security.jwt.JwtTokenUtil;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,11 +18,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -36,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = "prod")
 public class ProjectControllerTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -73,7 +72,7 @@ public class ProjectControllerTest {
         List<Task> taskList = new ArrayList<>();
         Task task = new Task();
         task.setTitle("title");
-        task.setCreateDate(new Date());
+        task.setCreateDate(LocalDateTime.now());
         task.setActive(false);
         task.setPriority(1);
         task.setProject(project);
@@ -102,7 +101,7 @@ public class ProjectControllerTest {
 
     @Test
     public void postProjectSave() throws Exception {
-        given(userService.getByUsername(anyString())).willReturn(Optional.of(user));
+        given(userService.findByUsername(anyString())).willReturn(Optional.of(user));
         given(projectService.save(any(Project.class))).willReturn(projectList.get(0));
 
         String projectJson = objectMapper.writeValueAsString(projectList.get(0));
@@ -150,7 +149,7 @@ public class ProjectControllerTest {
 
     @Test
     public void getProjectList() throws Exception {
-        given(userService.getByUsername(anyString())).willReturn(Optional.of(user));
+        given(userService.findByUsername(anyString())).willReturn(Optional.of(user));
         given(projectService.getAllByUserId(anyInt())).willReturn(projectList);
 
         String projectListJson = objectMapper.writeValueAsString(projectList);

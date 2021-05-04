@@ -17,6 +17,6 @@ public interface TaskRepository extends CrudRepository<Task, Integer> {
 
     @Modifying
     @Query(value = "update task set task.priority = ? where task.id = ?", nativeQuery=true)
-    Task updatePriority(int priority, int taskId);
+    Integer updatePriority(int priority, int taskId);
 
 }

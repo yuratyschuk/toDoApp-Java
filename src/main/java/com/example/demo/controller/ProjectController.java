@@ -6,6 +6,8 @@ import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +41,7 @@ public class ProjectController {
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getByUsername(authentication.getName())
+        User user = userService.findByUsername(authentication.getName())
                 .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
         project.setUserList(Collections.singletonList(user));
 
@@ -60,25 +62,26 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<Iterable<Project>> getAllProjectsByUserId() {
+    public ResponseEntity<?> getAllProjectsByUserId() throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getByUsername(authentication.getName())
+        User user = userService.findByUsername(authentication.getName())
                 .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
 
-
-        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getAllByUserId(user.getId()));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(projectService.getAllByUserId(user.getId()));
+        return ResponseEntity.status(HttpStatus.OK).body(json);
     }
 
     @GetMapping(value = "/{projectId}")
     public ResponseEntity<Project> getProject(@PathVariable("projectId") int projectId) {
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getById(projectId)
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.getById(projectId)
                 .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId)));
     }
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<Iterable<Project>> getAllProjects() {
-        return ResponseEntity.status(HttpStatus.FOUND).body(projectService.getAll());
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.getAll());
     }
 
     @PostMapping(value = "/share/{projectId}")

@@ -1,6 +1,6 @@
 package com.example.demo.clock;
 
-import com.example.demo.jwt.ClockImpl;
+import com.example.demo.security.jwt.ClockImpl;
 import io.jsonwebtoken.Clock;
 import org.junit.Test;
 

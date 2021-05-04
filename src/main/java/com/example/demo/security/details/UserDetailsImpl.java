@@ -1,11 +1,14 @@
-package com.example.demo.details;
+package com.example.demo.security.details;
 
 import com.example.demo.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -15,18 +18,12 @@ public class UserDetailsImpl implements UserDetails {
         this.user = user;
     }
 
-    @JsonIgnore
-    public int getId() {
-        return user.getId();
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
-    @JsonIgnore
     public String getPassword() {
         return user.getPassword();
     }
@@ -37,19 +34,16 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }

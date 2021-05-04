@@ -1,7 +1,6 @@
-package com.example.demo.jwt;
+package com.example.demo.security.jwt;
 
 import io.jsonwebtoken.Clock;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

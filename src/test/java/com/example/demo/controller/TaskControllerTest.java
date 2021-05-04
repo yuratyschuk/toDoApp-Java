@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.details.UserDetailsImpl;
-import com.example.demo.details.UserDetailsServiceImpl;
-import com.example.demo.jwt.JwtTokenUtil;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
+import com.example.demo.security.details.UserDetailsImpl;
+import com.example.demo.security.details.UserDetailsServiceImpl;
+import com.example.demo.security.jwt.JwtTokenUtil;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.TaskService;
 import com.example.demo.service.UserService;
@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = "prod")
 public class TaskControllerTest {
 
 
@@ -75,7 +75,7 @@ public class TaskControllerTest {
         Task task = new Task();
         task.setTitle("test title 1");
         task.setDescription("test description 1");
-        task.setCreateDate(new Date());
+        task.setCreateDate(LocalDateTime.now());
         task.setActive(true);
         task.setPriority(1);
         task.setProject(new Project());
@@ -83,7 +83,7 @@ public class TaskControllerTest {
         Task task1 = new Task();
         task1.setTitle("test title 2");
         task1.setDescription("test description 2");
-        task1.setCreateDate(new Date());
+        task1.setCreateDate(LocalDateTime.now());
         task1.setActive(true);
         task1.setPriority(2);
         task1.setProject(new Project());
@@ -235,7 +235,7 @@ public class TaskControllerTest {
 
     @Test
     public void putUpdateTaskPriority() throws Exception {
-        given(taskService.updatePriority(1, 1)).willReturn(taskList.get(0));
+        given(taskService.updatePriority(1, 1)).willReturn(1);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/tasks/priority/{taskId}", 1)
                 .with(user("test").password("test"))

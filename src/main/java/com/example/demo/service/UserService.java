@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.email.sender.Mail;
 import com.example.demo.email.sender.MailService;
 import com.example.demo.exception.DataNotFoundException;
-import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
@@ -14,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,24 +23,20 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    TaskRepository taskService;
+    private final TaskRepository taskService;
 
-    MailService mailService;
-
-    KafkaService kafkaService;
+    private final MailService mailService;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                       TaskRepository taskService, MailService mailService, KafkaService kafkaService) {
+    public UserService(UserRepository userRepository,
+                       TaskRepository taskService, MailService mailService) {
         this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.taskService = taskService;
         this.mailService = mailService;
-        this.kafkaService = kafkaService;
     }
 
     public User save(User user) {
@@ -69,7 +65,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Optional<User> getByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -80,11 +76,9 @@ public class UserService {
 
     public void checkIfTaskIsOutOfDate() {
         List<Task> taskList = (List<Task>) taskService.findAll();
-        Date date = new Date();
         for (Task task : taskList) {
-            if (task.getFinishDate() != null && date.compareTo(task.getFinishDate()) > 0) {
+            if (task.getFinishDate() != null && LocalDateTime.now().isAfter(task.getFinishDate())) {
                 configureEmailBeforeSending(task);
-
             }
         }
     }

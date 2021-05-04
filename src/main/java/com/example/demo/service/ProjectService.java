@@ -62,7 +62,7 @@ public class ProjectService {
             user = userService.getByEmail(credentials)
                     .orElseThrow(() -> new DataNotFoundException("User not found. Email: " + credentials));
         } else {
-            user = userService.getByUsername(credentials)
+            user = userService.findByUsername(credentials)
                     .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + credentials));
         }
 

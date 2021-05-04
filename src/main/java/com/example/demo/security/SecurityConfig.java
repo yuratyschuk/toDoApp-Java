@@ -1,8 +1,8 @@
 package com.example.demo.security;
 
-import com.example.demo.details.UserDetailsServiceImpl;
-import com.example.demo.jwt.JwtTokenAuthorizationOncePerRequestFilter;
-import com.example.demo.jwt.JwtUnAuthorizedResponseAuthenticationEntryPoint;
+import com.example.demo.security.details.UserDetailsServiceImpl;
+import com.example.demo.security.jwt.JwtTokenAuthorizationOncePerRequestFilter;
+import com.example.demo.security.jwt.JwtUnAuthorizedResponseAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,24 +21,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    JwtUnAuthorizedResponseAuthenticationEntryPoint jwtUnAuthorizedResponseAuthenticationEntryPoint;
+    private final JwtUnAuthorizedResponseAuthenticationEntryPoint entryPoint;
 
-    JwtTokenAuthorizationOncePerRequestFilter jwtTokenAuthorizationOncePerRequestFilter;
+    private final JwtTokenAuthorizationOncePerRequestFilter requestFilter;
 
     @Value("${jwt.get.token.uri}")
     private String authenticationPath;
 
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService,
-                             JwtTokenAuthorizationOncePerRequestFilter jwtTokenAuthorizationOncePerRequestFilter,
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService,
+                             JwtTokenAuthorizationOncePerRequestFilter requestFilter,
                              JwtUnAuthorizedResponseAuthenticationEntryPoint
-                                     jwtUnAuthorizedResponseAuthenticationEntryPoint) {
+                                  entryPoint) {
         this.userDetailsService = userDetailsService;
-        this.jwtTokenAuthorizationOncePerRequestFilter = jwtTokenAuthorizationOncePerRequestFilter;
-        this.jwtUnAuthorizedResponseAuthenticationEntryPoint = jwtUnAuthorizedResponseAuthenticationEntryPoint;
+        this.requestFilter = requestFilter;
+        this.entryPoint = entryPoint;
     }
 
     @Bean
@@ -58,28 +58,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(jwtUnAuthorizedResponseAuthenticationEntryPoint).and()
+                .cors()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(entryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .anyRequest().authenticated();
-
-        httpSecurity
-                .addFilterBefore(jwtTokenAuthorizationOncePerRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
-        httpSecurity
+                .anyRequest()
+                .authenticated()
+                .and()
+                .addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers()
-                .frameOptions().sameOrigin()
-                .cacheControl();
+                .cacheControl()
+                .and()
+                .frameOptions() ;
 
-        httpSecurity.cors().disable();
     }
 
+
     @Override
-    public void configure(WebSecurity webSecurity) throws Exception {
+    public void configure(WebSecurity webSecurity) {
         webSecurity
                 .ignoring()
                 .antMatchers(
@@ -95,18 +97,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .and()
                 .ignoring()
-                .antMatchers("/h2-console/**/**")
-                .and()
-                .ignoring()
-                .antMatchers("/user/register")
-                .and()
-                .ignoring()
-                .antMatchers("/v2/api-docs",
+                .antMatchers(
+
                         "/configuration/ui",
-                        "/swagger-resources/**",
                         "/configuration/security",
-                        "/swagger-ui.html",
-                        "/webjars/**");
+                        "/webjars/**",
+                        "/users/register",
+                        "/h2-console/**/**");
     }
+
+
 
 }

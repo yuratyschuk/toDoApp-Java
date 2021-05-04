@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.email.sender.MailService;
-import com.example.demo.kafka.KafkaService;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
@@ -19,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 
@@ -40,9 +40,6 @@ public class UserServiceTest {
 
     @MockBean
     private MailService mailService;
-
-    @MockBean
-    private KafkaService kafkaService;
 
     @Autowired
     @InjectMocks
@@ -70,7 +67,7 @@ public class UserServiceTest {
         task.setActive(true);
         task.setPriority(2);
         task.setProject(project);
-        task.setCreateDate(new Date());
+        task.setCreateDate(LocalDateTime.now());
     }
 
     @Test
