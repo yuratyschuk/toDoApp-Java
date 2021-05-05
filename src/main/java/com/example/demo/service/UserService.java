@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,26 +74,24 @@ public class UserService {
     }
 
     public void checkIfTaskIsOutOfDate() {
-        List<Task> taskList = (List<Task>) taskService.findAll();
-        for (Task task : taskList) {
+        taskService.findAll().forEach(task -> {
             if (task.getFinishDate() != null && LocalDateTime.now().isAfter(task.getFinishDate())) {
                 configureEmailBeforeSending(task);
             }
-        }
+        });
     }
 
     public void configureEmailBeforeSending(Task task) {
-        Project project = task.getProject();
-
-        for(User user : project.getUserList()) {
+        task.getProject().getUserList().forEach(user -> {
             Mail mail = new Mail();
             mail.setMailFrom("toDoApp@gmail.com");
             mail.setMailTo(user.getEmail());
             mail.setMailSubject("ToDo App");
             mail.setMailContent("You have expired task: " + task.getTitle());
             mailService.sendEmail(mail);
-        }
+        });
     }
+
     public Optional<User> getByEmail(String email) {
         return userRepository.findByEmail(email);
     }

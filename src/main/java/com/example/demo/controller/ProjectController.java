@@ -7,7 +7,8 @@ import com.example.demo.model.User;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
+
+    private static final Logger logger = LogManager.getLogger(ProjectController.class);
 
     private final ProjectService projectService;
 
@@ -37,14 +39,17 @@ public class ProjectController {
     @PostMapping(value = "/save")
     public ResponseEntity<Project> saveProject(@Valid @RequestBody Project project, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new ValidationException(Objects.requireNonNull(bindingResult.getFieldError().toString()));
+            logger.error("Project has errors {}", bindingResult.getFieldError().getField());
+            throw new ValidationException(bindingResult.getFieldError().getField());
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(authentication.getName())
-                .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
-        project.setUserList(Collections.singletonList(user));
+        User user = userService.findByUsername(authentication.getName()).orElseThrow(() -> {
+            logger.error("User not found. Username {}", authentication.getName());
+            return new DataNotFoundException("User not found. Username: " + authentication.getName());
+        });
 
+        project.setUserList(Collections.singletonList(user));
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.save(project));
     }
 
@@ -53,40 +58,43 @@ public class ProjectController {
     public ResponseEntity<?> deleteProject(@PathVariable("projectId") int projectId) {
         projectService.deleteById(projectId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping(value = "/edit/{projectId}")
     public ResponseEntity<Project> updateProject(@ModelAttribute Project project) {
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.update(project));
+        return ResponseEntity.ok().body(projectService.update(project));
     }
 
     @GetMapping(value = "/list")
     public ResponseEntity<?> getAllProjectsByUserId() throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(authentication.getName())
-                .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + authentication.getName()));
+        User user = userService.findByUsername(authentication.getName()).orElseThrow(() -> {
+            logger.error("User not found. Username {}", authentication.getName());
+            return new DataNotFoundException("User not found. Username: " + authentication.getName());
+        });
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(projectService.getAllByUserId(user.getId()));
-        return ResponseEntity.status(HttpStatus.OK).body(json);
+        return ResponseEntity.ok().body(projectService.getAllByUserId(user.getId()));
     }
 
     @GetMapping(value = "/{projectId}")
     public ResponseEntity<Project> getProject(@PathVariable("projectId") int projectId) {
+        Project project = projectService.getById(projectId).orElseThrow(() -> {
+            logger.error("Project not found. Id: {} ", projectId);
+            return new DataNotFoundException("Project not found. Id: " + projectId);
+        });
 
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.getById(projectId)
-                .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId)));
+        return ResponseEntity.ok().body(project);
     }
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<Iterable<Project>> getAllProjects() {
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.getAll());
+        return ResponseEntity.ok().body(projectService.getAll());
     }
 
     @PostMapping(value = "/share/{projectId}")
     public ResponseEntity<Project> shareProject(@PathVariable("projectId") int projectId,
                                                 @RequestParam String credentials) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.share(credentials, projectId));
+        return ResponseEntity.ok().body(projectService.share(credentials, projectId));
     }
 }

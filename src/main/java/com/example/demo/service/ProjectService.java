@@ -5,6 +5,8 @@ import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import com.example.demo.repository.ProjectRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +18,17 @@ import java.util.Optional;
 @Transactional
 public class ProjectService {
 
-    ProjectRepository projectRepository;
+    private static final Logger logger = LogManager.getLogger(ProjectService.class);
 
-    UserService userService;
+    private final ProjectRepository projectRepository;
+
+    private final UserService userService;
 
     @Autowired
     public ProjectService(ProjectRepository projectRepository, UserService userService) {
         this.projectRepository = projectRepository;
         this.userService = userService;
     }
-
 
     public Project save(Project project) {
         return projectRepository.save(project);
@@ -55,7 +58,6 @@ public class ProjectService {
         return projectRepository.findAllByUser(id);
     }
 
-
     public Project share(String credentials, int projectId) throws Exception {
         User user;
         if (credentials.contains("@")) {
@@ -66,11 +68,11 @@ public class ProjectService {
                     .orElseThrow(() -> new DataNotFoundException("User not found. Username: " + credentials));
         }
 
-
         Project project = getById(projectId)
                 .orElseThrow(() -> new DataNotFoundException("Project not found. Id: " + projectId));
 
         if (project.getUserList().contains(user)) {
+            logger.error("Project already shared. Project name: {}", project.getName());
             throw new AlreadySharedException("Project already shared: " + project.getName());
         }
 

@@ -11,7 +11,6 @@ public class ScheduleTaskEmailSender {
 
     private final UserService userService;
 
-
     ScheduleTaskEmailSender(UserService userService) {
         this.userService = userService;
     }

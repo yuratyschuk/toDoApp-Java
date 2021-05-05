@@ -47,17 +47,16 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
-                logger.error("JWT TOKEN UNABLE TO GET USERNAME", e);
+                logger.error("Unable to get username", e);
             } catch (ExpiredJwtException e) {
-                logger.warn("JWT TOKEN EXPIRED", e);
+                logger.error("Jwt token expired", e);
             }
         } else {
-            logger.warn("JWT TOKEN DOES NOT START WITH BEARER STRING");
+            logger.warn("Jwt token doesn't start with bearer string.");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetailsImpl userDetails = (UserDetailsImpl) this.userDetailsService.loadUserByUsername(username);
+            UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
 
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

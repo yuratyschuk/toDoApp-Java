@@ -18,14 +18,11 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    private final UserService userService;
-
     private final TaskMapper taskMapper;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, UserService userService, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
-        this.userService = userService;
         this.taskMapper = taskMapper;
     }
 
@@ -36,7 +33,6 @@ public class TaskService {
         if(task.getPriority() == 0) {
             task.setPriority(1);
         }
-
 
         return taskRepository.save(task);
     }
