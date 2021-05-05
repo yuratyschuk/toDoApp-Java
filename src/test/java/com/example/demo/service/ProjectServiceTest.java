@@ -44,7 +44,6 @@ public class ProjectServiceTest {
         user.setUsername("username");
         user.setPassword("password");
         user.setEmail("email");
-        user.setRepeatedPassword("password");
 
 
         project = new Project();

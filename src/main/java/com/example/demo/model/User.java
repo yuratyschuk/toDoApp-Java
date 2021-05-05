@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "users")
-@Table(name = "users")
 @Data
 @NoArgsConstructor
 public class User {
@@ -26,10 +25,6 @@ public class User {
 
     @NotEmpty
     private String password;
-
-    @Transient
-    @NotEmpty
-    private String repeatedPassword;
 
     @Column(name = "first_name")
     private String firstName;

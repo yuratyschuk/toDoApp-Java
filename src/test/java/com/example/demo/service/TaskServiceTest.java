@@ -47,7 +47,6 @@ public class TaskServiceTest {
         user.setUsername("username");
         user.setPassword("password");
         user.setEmail("email");
-        user.setRepeatedPassword("password");
 
 
         Project project = new Project();

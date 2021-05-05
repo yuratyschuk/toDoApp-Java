@@ -67,7 +67,6 @@ public class UserControllerTest {
         User user = new User();
         user.setUsername("test");
         user.setPassword("test");
-        user.setRepeatedPassword("test");
         user.setEmail("test@gmail.com");
 
         userList.add(user);

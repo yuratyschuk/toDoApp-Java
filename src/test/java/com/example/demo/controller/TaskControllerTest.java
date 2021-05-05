@@ -94,7 +94,6 @@ public class TaskControllerTest {
         User user = new User();
         user.setPassword("password");
         user.setEmail("email");
-        user.setRepeatedPassword("password");
 
 
         given(userService.getById(anyInt())).willReturn(Optional.of(user));

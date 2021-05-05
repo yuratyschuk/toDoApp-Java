@@ -87,7 +87,6 @@ public class ProjectControllerTest {
         user = new User();
         user.setPassword("password");
         user.setEmail("email");
-        user.setRepeatedPassword("password");
         Set<Project> projectSet = new HashSet<>();
         projectSet.add(projectList.get(0));
         user.setProjectSet(projectSet);

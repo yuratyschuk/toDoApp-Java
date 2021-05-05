@@ -40,7 +40,6 @@ public class UserService {
 
     public User save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRepeatedPassword("null");
         return userRepository.save(user);
     }
 

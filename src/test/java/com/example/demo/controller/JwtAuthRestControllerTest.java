@@ -69,7 +69,6 @@ public class JwtAuthRestControllerTest {
         user = new User();
         user.setPassword("password");
         user.setEmail("email");
-        user.setRepeatedPassword("password");
 
     }
 
@@ -103,8 +102,6 @@ public class JwtAuthRestControllerTest {
         given(jwtTokenUtil.generateToken(new UserDetailsImpl(user))).willReturn("Bearer token");
 
         given(httpServletRequest.getHeader(anyString())).willReturn(TEST_TOKEN);
-        given(jwtTokenUtil.canTokenBeRefreshed(anyString())).willReturn(true);
-        given(jwtTokenUtil.refreshToken(anyString())).willReturn(TEST_TOKEN);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/refresh")
                 .with(user("test").password("test"))
@@ -124,7 +121,6 @@ public class JwtAuthRestControllerTest {
         given(jwtTokenUtil.generateToken(new UserDetailsImpl(user))).willReturn("Bearer token");
 
         given(httpServletRequest.getHeader(anyString())).willReturn(TEST_TOKEN);
-        given(jwtTokenUtil.canTokenBeRefreshed(anyString())).willReturn(false);
         given(jwtTokenUtil.refreshToken(anyString())).willReturn(TEST_TOKEN);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/refresh")

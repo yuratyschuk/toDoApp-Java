@@ -11,8 +11,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
-@Entity(name = "task")
-@Table(name = "task")
+@Entity
 @Data
 @NoArgsConstructor
 public class Task {
