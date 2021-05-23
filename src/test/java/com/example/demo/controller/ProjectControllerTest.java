@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -36,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles(profiles = "dev")
 public class ProjectControllerTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -156,7 +158,7 @@ public class ProjectControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/projects/list")
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(content().string(projectListJson))
                 .andDo(print());
 
@@ -171,7 +173,7 @@ public class ProjectControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/projects/1")
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(content().string(projectJson))
                 .andDo(print());
     }
@@ -185,7 +187,7 @@ public class ProjectControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/projects/getAll")
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(content().string(projectListJson))
                 .andDo(print());
     }
