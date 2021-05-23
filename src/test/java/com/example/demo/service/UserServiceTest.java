@@ -1,16 +1,14 @@
 package com.example.demo.service;
 
-import com.example.demo.email.sender.MailService;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
+import com.example.demo.model.dto.UserDto;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
@@ -47,8 +44,16 @@ public class UserServiceTest {
 
     private User user;
 
+    private UserDto userDto;
+
     @Before
     public void setup() {
+
+        userDto = new UserDto();
+        userDto.setUsername("username");
+        userDto.setPassword("password");
+        userDto.setEmail("email");
+
         user = new User();
         user.setUsername("username");
         user.setPassword("password");
@@ -74,7 +79,7 @@ public class UserServiceTest {
         given(userRepository.save(any(User.class))).willReturn(user);
         given(bCryptPasswordEncoder.encode(anyString())).willReturn("encoded password");
 
-        User savedUser = userService.save(user);
+        User savedUser = userService.save(userDto);
 
         assertEquals("encoded password", savedUser.getPassword());
         verify(userRepository, times(1)).save(user);

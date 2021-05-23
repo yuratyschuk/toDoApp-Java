@@ -1,5 +1,6 @@
-package com.example.demo.email.sender;
+package com.example.demo.service;
 
+import com.example.demo.model.Mail;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 
-@Service("mailService")
-public class MailServiceImpl implements MailService {
+@Service
+public class MailService {
 
-    JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    public MailServiceImpl(JavaMailSender mailSender) {
+    public MailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 

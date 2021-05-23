@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Mail;
 import com.example.demo.exception.AlreadySharedException;
 import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.model.Project;
@@ -24,10 +25,13 @@ public class ProjectService {
 
     private final UserService userService;
 
+    private final MailService mailService;
+
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, UserService userService) {
+    public ProjectService(ProjectRepository projectRepository, UserService userService, MailService mailService) {
         this.projectRepository = projectRepository;
         this.userService = userService;
+        this.mailService = mailService;
     }
 
     public Project save(Project project) {
@@ -77,8 +81,18 @@ public class ProjectService {
         }
 
         project.setUserList(Collections.singletonList(user));
+        mailService.sendEmail(createMail(user.getEmail(), project.getName()));
 
         return save(project);
     }
 
+    private Mail createMail(String userEmail, String projectName) {
+        Mail mail = new Mail();
+        mail.setMailFrom("toDoApp@gmail.com");
+        mail.setMailTo(userEmail);
+        mail.setMailSubject("ToDo App");
+        mail.setMailContent("Hi! New project was shared with you: " + projectName);
+
+        return mail;
+    }
 }

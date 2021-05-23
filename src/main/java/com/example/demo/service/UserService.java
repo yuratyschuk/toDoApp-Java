@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.email.sender.Mail;
-import com.example.demo.email.sender.MailService;
+import com.example.demo.model.Mail;
 import com.example.demo.exception.DataNotFoundException;
-import com.example.demo.model.Project;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
+import com.example.demo.model.dto.UserDto;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -30,16 +29,22 @@ public class UserService {
 
     private final MailService mailService;
 
+    private final UserMapper userMapper;
+
     @Autowired
     public UserService(UserRepository userRepository,
-                       TaskRepository taskService, MailService mailService) {
+                       TaskRepository taskService, MailService mailService,
+                       UserMapper userMapper) {
         this.userRepository = userRepository;
         this.taskService = taskService;
         this.mailService = mailService;
+        this.userMapper = userMapper;
     }
 
-    public User save(User user) {
+    public User save(UserDto userDto) {
+        User user = userMapper.user(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
         return userRepository.save(user);
     }
 

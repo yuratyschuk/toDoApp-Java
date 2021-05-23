@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.model.dto.UserDto;
 import com.example.demo.security.details.UserDetailsImpl;
 import com.example.demo.security.details.UserDetailsServiceImpl;
 import com.example.demo.security.jwt.JwtTokenUtil;
@@ -93,7 +94,7 @@ public class UserControllerTest {
 
     @Test
     public void postRegisterUser() throws Exception {
-        given(userService.save(any(User.class))).willReturn(userList.get(0));
+        given(userService.save(any(UserDto.class))).willReturn(userList.get(0));
         given(bCryptPasswordEncoder.encode(anyString())).willReturn("password");
 
         String userJson = objectMapper.writeValueAsString(userList.get(0));

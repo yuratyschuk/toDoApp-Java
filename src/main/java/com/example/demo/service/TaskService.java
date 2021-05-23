@@ -27,6 +27,11 @@ public class TaskService {
     }
 
     public Task save(Task task) {
+        if(task.getId() > 0) {
+            task.setId(0);
+            return taskRepository.save(task);
+        }
+
         task.setActive(true);
         task.setCreateDate(LocalDateTime.now());
 

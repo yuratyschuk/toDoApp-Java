@@ -35,6 +35,9 @@ public class User {
     @Column(name = "registration_date")
     private Date registrationDate;
 
+    @Column(name = "last_update")
+    private Date updateDate;
+
     @NotEmpty
     @Email
     private String email;
@@ -42,5 +45,15 @@ public class User {
     @ManyToMany(mappedBy = "userList")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Project> projectSet = new HashSet<>();
+
+    @PrePersist
+    private void onCreate() {
+        registrationDate = new Date();
+    }
+
+    @PreUpdate
+    private void onUpdate() {
+        updateDate = new Date();
+    }
 }
 

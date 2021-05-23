@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.exception.ValidationException;
 import com.example.demo.model.User;
+import com.example.demo.model.dto.UserDto;
 import com.example.demo.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,13 +38,12 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<User> saveUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+    public ResponseEntity<User> saveUser(@Valid @RequestBody UserDto user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.error("User validation error. Fields: {}", bindingResult.getFieldError().getField());
             throw new ValidationException(bindingResult.getFieldError().getField());
         }
 
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
