@@ -115,24 +115,6 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserSubscribe() throws Exception {
-        given(userService.findByUsername(anyString())).willReturn(Optional.of(userList.get(0)));
-        String userJson = objectMapper.writeValueAsString(userList.get(0));
-
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/subscribe")
-                .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN)
-                .with(user("test").password("test"))
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(userJson))
-                .andExpect(status().isOk())
-                .andExpect(content().string(userJson))
-                .andDo(print());
-
-    }
-
-    @Test
     public void getUserById() throws Exception {
         given(userService.getById(anyInt())).willReturn(Optional.of(userList.get(0)));
 
@@ -141,7 +123,7 @@ public class UserControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/users/get/1")
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(content().string(userJson))
                 .andDo(print());
     }

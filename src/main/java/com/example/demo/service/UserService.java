@@ -23,7 +23,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     private final TaskRepository taskService;
 
@@ -98,5 +98,9 @@ public class UserService {
 
     public Optional<User> getByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 }

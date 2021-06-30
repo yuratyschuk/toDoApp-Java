@@ -27,9 +27,9 @@ public class ProjectRepositoryTest {
     @Test
     public void findAllProjectByUserId_thenReturnProject() {
         Project project = new Project();
-        project.setId(2);
-        project.setName("SQL Project");
-        List<Project> projectIterable = (List<Project>) projectRepository.findAllByUser(1);
+        project.setId(1);
+        project.setName("Java Project");
+        List<Project> projectIterable = (List<Project>) projectRepository.findAllByUser(4);
 
         assertEquals(projectIterable.get(0).getId(), project.getId());
         assertEquals(projectIterable.get(0).getName().toLowerCase(), project.getName().toLowerCase());

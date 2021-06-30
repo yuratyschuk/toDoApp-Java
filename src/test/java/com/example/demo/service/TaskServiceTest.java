@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.mapper.TaskMapper;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,6 +27,8 @@ import static org.mockito.BDDMockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TaskService.class)
+
+@ActiveProfiles(profiles = "dev")
 public class TaskServiceTest {
 
     @MockBean
@@ -32,6 +36,9 @@ public class TaskServiceTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private TaskMapper taskMapper;
 
     @InjectMocks
     @Autowired
@@ -89,7 +96,7 @@ public class TaskServiceTest {
     public void testChangeStatus() {
         given(taskRepository.save(any(Task.class))).willReturn(task);
         Task changedStatusTask = taskService.changeStatus(task);
-        changedStatusTask.setActive(!changedStatusTask.isActive());
+
         assertFalse(changedStatusTask.isActive());
         verify(taskRepository, times(1)).save(task);
     }

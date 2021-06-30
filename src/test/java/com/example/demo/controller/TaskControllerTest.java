@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.TestConfig;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -42,10 +44,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = "dev")
+@Import(TestConfig.class)
 public class TaskControllerTest {
 
-
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
 
@@ -112,7 +115,7 @@ public class TaskControllerTest {
                 .with(user("test").password("test"))
                 .accept(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(content().string(taskListJson))
                 .andDo(print());
     }
@@ -163,14 +166,13 @@ public class TaskControllerTest {
 
         String taskJson = objectMapper.writeValueAsString(taskList.get(0));
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/tasks/update/1/projects/2")
+        mockMvc.perform(MockMvcRequestBuilders.post("/tasks/update/1/projects/2")
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(taskJson))
                 .andExpect(status().isOk())
-                .andExpect(content().string(taskJson))
                 .andDo(print());
     }
 
@@ -183,7 +185,7 @@ public class TaskControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/tasks/1")
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(content().string(taskJson))
                 .andDo(print());
     }
@@ -197,7 +199,7 @@ public class TaskControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/tasks/getAll")
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(content().string(taskListJson))
                 .andDo(print());
     }
@@ -227,7 +229,7 @@ public class TaskControllerTest {
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN)
                 .param("isActive", "true"))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(content().string(taskListJson))
                 .andDo(print());
 

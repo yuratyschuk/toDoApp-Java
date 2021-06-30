@@ -34,6 +34,9 @@ public class ProjectServiceTest {
     @Autowired
     private ProjectService projectService;
 
+    @MockBean
+    private MailService mailService;
+
     private Project project;
 
     private User user;

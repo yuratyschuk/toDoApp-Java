@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.TestConfig;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
@@ -9,6 +10,7 @@ import com.example.demo.security.jwt.JwtTokenUtil;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,6 +26,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -38,16 +43,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = "dev")
+@Import(TestConfig.class)
 public class ProjectControllerTest {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private ProjectService projectService;
-
 
     @MockBean
     private UserService userService;
@@ -66,6 +72,9 @@ public class ProjectControllerTest {
 
     @Before
     public void setup() {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+//        objectMapper.setDateFormat(dateFormat);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         projectList = new ArrayList<>();
 
         Project project = new Project();
@@ -154,7 +163,7 @@ public class ProjectControllerTest {
         given(projectService.getAllByUserId(anyInt())).willReturn(projectList);
 
         String projectListJson = objectMapper.writeValueAsString(projectList);
-
+        System.out.println(projectListJson);
         mockMvc.perform(MockMvcRequestBuilders.get("/projects/list")
                 .with(user("test").password("test"))
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))

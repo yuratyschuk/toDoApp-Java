@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.TestConfig;
 import com.example.demo.model.User;
 import com.example.demo.security.details.UserDetailsImpl;
 import com.example.demo.security.details.UserDetailsServiceImpl;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -90,7 +92,7 @@ public class JwtAuthRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jwtTokenRequestJson))
                 .andExpect(status().isOk())
-                .andExpect(content().string(TEST_TOKEN))
+                .andExpect(content().string("{\"token\":\"Bearer token\"}"))
                 .andDo(print());
 
 
@@ -101,6 +103,7 @@ public class JwtAuthRestControllerTest {
         given(userService.getById(anyInt())).willReturn(Optional.of(user));
         given(userDetailsService.loadUserByUsername(anyString())).willReturn(new UserDetailsImpl(user));
         given(jwtTokenUtil.generateToken(new UserDetailsImpl(user))).willReturn("Bearer token");
+        given(jwtTokenUtil.isTokenExpired("token")).willReturn(true);
 
         given(httpServletRequest.getHeader(anyString())).willReturn(TEST_TOKEN);
 
@@ -110,7 +113,7 @@ public class JwtAuthRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
                 .andExpect(status().isOk())
-                .andExpect(content().string(TEST_TOKEN))
+                .andExpect(content().string(""))
                 .andDo(print());
 
     }
@@ -130,7 +133,7 @@ public class JwtAuthRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, TEST_TOKEN))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string(""))
+                .andExpect(content().string("Token can't be refreshed, because token not expired."))
                 .andDo(print());
     }
 }

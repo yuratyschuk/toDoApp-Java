@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
@@ -38,6 +39,9 @@ public class UserServiceTest {
     @MockBean
     private MailService mailService;
 
+    @MockBean
+    private UserMapper userMapper;
+
     @Autowired
     @InjectMocks
     private UserService userService;
@@ -72,12 +76,15 @@ public class UserServiceTest {
         task.setPriority(2);
         task.setProject(project);
         task.setCreateDate(LocalDateTime.now());
+
+        userService.setbCryptPasswordEncoder(bCryptPasswordEncoder);
     }
 
     @Test
     public void testSaveMethod() {
         given(userRepository.save(any(User.class))).willReturn(user);
         given(bCryptPasswordEncoder.encode(anyString())).willReturn("encoded password");
+        given(userMapper.user(userDto)).willReturn(user);
 
         User savedUser = userService.save(userDto);
 
