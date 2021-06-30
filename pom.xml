@@ -159,7 +159,7 @@
             </plugin>
 
         </plugins>
-        <finalName>todo_app_aws</finalName>
+        <finalName>todo-app</finalName>
 
         <resources>
             <resource>
