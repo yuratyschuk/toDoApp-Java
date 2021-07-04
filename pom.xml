@@ -19,6 +19,9 @@
     <properties>
         <java.version>1.8</java.version>
         <swagger.version>2.9.2</swagger.version>
+        <sonar.projectKey>yuratyschuk_toDoApp-Java</sonar.projectKey>
+        <sonar.organization>yuratyschuk</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
