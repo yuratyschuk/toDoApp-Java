@@ -32,7 +32,6 @@ build/
 .vscode/
 /filebeat/data/
 /elasticsearch/
-/grafana/
 /prometheus/
 /config/provisioning/dashboards/all.yaml
 /config/provisioning/datasources/all.yaml
