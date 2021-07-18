@@ -32,3 +32,9 @@ build/
 .vscode/
 /filebeat/data/
 /elasticsearch/
+/grafana/
+/prometheus/
+/config/provisioning/dashboards/all.yaml
+/config/provisioning/datasources/all.yaml
+/config/provisioning/dashboards/jvm-micrometer_rev9.json
+/config/provisioning/dashboards/micrometer-spring-throughput_rev2.json
