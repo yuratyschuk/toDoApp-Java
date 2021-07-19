@@ -3,6 +3,7 @@ package com.example.demo.security;
 import com.example.demo.security.details.UserDetailsServiceImpl;
 import com.example.demo.security.jwt.JwtTokenAuthorizationOncePerRequestFilter;
 import com.example.demo.security.jwt.JwtUnAuthorizedResponseAuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,7 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String AUTHENTICATION_PATH = "/authenticate";
+    @Value("${auth.uri}")
+    private String authenticationPath;
 
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -81,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers(
                         HttpMethod.POST,
-                        AUTHENTICATION_PATH
+                        authenticationPath
                 )
                 .antMatchers(HttpMethod.OPTIONS, "/**")
                 .and()

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Mail;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 
 @Service
+@Slf4j
 public class MailService {
 
     private final JavaMailSender mailSender;
@@ -34,7 +36,7 @@ public class MailService {
             mailSender.send(mimeMessageHelper.getMimeMessage());
 
         } catch (MessagingException | UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.error("Error in mail service", e);
         }
     }
 

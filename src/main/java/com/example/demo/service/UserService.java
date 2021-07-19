@@ -72,8 +72,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public void getByUsernameAndPassword(String username, String password) {
-        userRepository.findByUsernameAndPassword(username, password)
+    public User getByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password)
                 .orElseThrow(() -> new DataNotFoundException("User with username " + username + " not found"));
     }
 

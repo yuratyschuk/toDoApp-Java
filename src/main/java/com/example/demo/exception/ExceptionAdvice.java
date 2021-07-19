@@ -12,31 +12,31 @@ import javax.validation.ConstraintViolationException;
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({CustomAuthenticationException.class})
-    public ResponseEntity<?> handleAuthenticationException(CustomAuthenticationException e) {
+    public ResponseEntity<ErrorModel> handleAuthenticationException(CustomAuthenticationException e) {
         return buildResponseEntity(new ErrorModel(HttpStatus.FORBIDDEN, e));
     }
 
     @ExceptionHandler({DataNotFoundException.class})
-    public ResponseEntity<?> handleDataNotFoundException(DataNotFoundException e) {
+    public ResponseEntity<ErrorModel> handleDataNotFoundException(DataNotFoundException e) {
         return buildResponseEntity(new ErrorModel(HttpStatus.NOT_FOUND, e));
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
-    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException e) {
+    public ResponseEntity<ErrorModel> handleConstraintViolationException(ConstraintViolationException e) {
         return buildResponseEntity(new ErrorModel(HttpStatus.BAD_REQUEST, e));
     }
 
     @ExceptionHandler({AlreadySharedException.class})
-    public ResponseEntity<?> handleAlreadySharedException(AlreadySharedException e) {
+    public ResponseEntity<ErrorModel> handleAlreadySharedException(AlreadySharedException e) {
         return buildResponseEntity((new ErrorModel(HttpStatus.BAD_REQUEST, e)));
     }
 
     @ExceptionHandler({ValidationException.class})
-    public ResponseEntity<?> handleValidationException(ValidationException e) {
+    public ResponseEntity<ErrorModel> handleValidationException(ValidationException e) {
         return buildResponseEntity(new ErrorModel(HttpStatus.BAD_REQUEST, e));
     }
 
-    private ResponseEntity<?> buildResponseEntity(ErrorModel errorModel) {
+    private ResponseEntity<ErrorModel> buildResponseEntity(ErrorModel errorModel) {
         return new ResponseEntity<>(errorModel, errorModel.getStatus());
     }
 

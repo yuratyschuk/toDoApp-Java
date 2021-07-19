@@ -3,6 +3,7 @@ package com.example.demo.security.jwt;
 
 import com.example.demo.exception.CustomAuthenticationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 @Component
+@Slf4j
 public class JwtUnAuthorizedResponseAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 
     private static final long serialVersionUID = -8970718410437077606L;
@@ -31,11 +33,14 @@ public class JwtUnAuthorizedResponseAuthenticationEntryPoint implements Authenti
     }
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
-        httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
-        httpResponse.getServletResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        httpResponse.getBody().write(objectMapper.
-                writeValueAsString(new CustomAuthenticationException(e.getMessage())).getBytes());
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) {
+        try(ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response)) {
+            httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+            httpResponse.getServletResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            httpResponse.getBody().write(objectMapper.
+                    writeValueAsString(new CustomAuthenticationException(e.getMessage())).getBytes());
+        } catch(IOException err) {
+            log.error("Failed to open ServletServerHttpResponse", err);
+        }
     }
 }

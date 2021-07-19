@@ -6,7 +6,6 @@ import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/projects")
@@ -39,8 +39,8 @@ public class ProjectController {
     @PostMapping(value = "/save")
     public ResponseEntity<Project> saveProject(@Valid @RequestBody Project project, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            logger.error("Project has errors {}", bindingResult.getFieldError().getField());
-            throw new ValidationException(bindingResult.getFieldError().getField());
+            logger.error("Project has errors {}", Objects.requireNonNull(bindingResult.getFieldError()).getField());
+            throw new ValidationException(Objects.requireNonNull(bindingResult.getFieldError()).getField());
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -55,7 +55,7 @@ public class ProjectController {
 
 
     @DeleteMapping(value = "/delete/{projectId}")
-    public ResponseEntity<?> deleteProject(@PathVariable("projectId") int projectId) {
+    public ResponseEntity<Void> deleteProject(@PathVariable("projectId") int projectId) {
         projectService.deleteById(projectId);
 
         return ResponseEntity.ok().build();
@@ -67,7 +67,7 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<?> getAllProjectsByUserId() throws JsonProcessingException {
+    public ResponseEntity<Iterable<Project>> getAllProjectsByUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByUsername(authentication.getName()).orElseThrow(() -> {
             logger.error("User not found. Username {}", authentication.getName());

@@ -62,7 +62,7 @@ public class ProjectService {
         return projectRepository.findAllByUser(id);
     }
 
-    public Project share(String credentials, int projectId) throws Exception {
+    public Project share(String credentials, int projectId) {
         User user;
         if (credentials.contains("@")) {
             user = userService.getByEmail(credentials)

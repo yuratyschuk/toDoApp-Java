@@ -19,7 +19,7 @@ public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -3301605591108950415L;
 
-    private final Clock clock;
+    private final transient Clock clock;
 
     @Value("${jwt.secret.key}")
     private String secret;
@@ -49,8 +49,8 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public boolean isTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token);
-        return expiration.before(clock.now());
+        final Date expirationDateFromToken = getExpirationDateFromToken(token);
+        return expirationDateFromToken.before(clock.now());
     }
 
     public String generateToken(UserDetailsImpl userDetails) {

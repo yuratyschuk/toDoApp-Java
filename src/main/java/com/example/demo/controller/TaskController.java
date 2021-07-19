@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/tasks")
@@ -49,15 +50,15 @@ public class TaskController {
         task.setProject(project);
 
         if (bindingResult.hasErrors()) {
-            logger.error("Validation exception. Field: {}", bindingResult.getFieldError().getField());
-            throw new ValidationException(bindingResult.getFieldError().getField());
+            logger.error("Validation exception. Field: {}", Objects.requireNonNull(bindingResult.getFieldError()).getField());
+            throw new ValidationException(Objects.requireNonNull(bindingResult.getFieldError()).getField());
         }
 
         return ResponseEntity.ok().body(taskService.save(task));
     }
 
     @DeleteMapping(value = "/delete/{taskId}")
-    public ResponseEntity<?> deleteTask(@PathVariable("taskId") int taskId) {
+    public ResponseEntity<Void> deleteTask(@PathVariable("taskId") int taskId) {
         taskService.deleteById(taskId);
 
         return ResponseEntity.ok().build();
@@ -110,7 +111,7 @@ public class TaskController {
     }
 
     @PutMapping(value = "/priority/{taskId}")
-    public ResponseEntity<?> updateTaskPriority(@RequestParam("priority") int priority,
+    public ResponseEntity<Void> updateTaskPriority(@RequestParam("priority") int priority,
                                                 @PathVariable("taskId") int taskId) {
         taskService.updatePriority(priority, taskId);
 

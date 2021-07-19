@@ -10,11 +10,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -24,12 +24,9 @@ public class UserController {
 
     private final UserService userService;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Autowired
-    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping(value = "/getAll")
@@ -40,8 +37,8 @@ public class UserController {
     @PostMapping(value = "/register")
     public ResponseEntity<User> saveUser(@Valid @RequestBody UserDto user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            logger.error("User validation error. Fields: {}", bindingResult.getFieldError().getField());
-            throw new ValidationException(bindingResult.getFieldError().getField());
+            logger.error("User validation error. Fields: {}", Objects.requireNonNull(bindingResult.getFieldError()).getField());
+            throw new ValidationException(Objects.requireNonNull(bindingResult.getFieldError()).getField());
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
@@ -65,7 +62,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<?> deleteUserById(@PathVariable("userId") int userId) {
+    public ResponseEntity<Void> deleteUserById(@PathVariable("userId") int userId) {
         userService.deleteById(userId);
 
         return ResponseEntity.ok().build();

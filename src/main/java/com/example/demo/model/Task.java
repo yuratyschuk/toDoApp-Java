@@ -9,12 +9,13 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Task {
+public class Task implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

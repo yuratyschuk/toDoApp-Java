@@ -80,7 +80,7 @@ public class ProjectServiceTest {
 
         List<Project> projectList = (List<Project>) projectService.getAll();
 
-        assertEquals(projectList.size(), 1);
+        assertEquals(1, projectList.size());
         assertEquals(projectList.get(0).getId(), project.getId());
     }
 
@@ -117,12 +117,12 @@ public class ProjectServiceTest {
 
         List<Project> projectList = (List<Project>) projectService.getAllByUserId(1);
 
-        assertEquals(projectList.size(), 1);
+        assertEquals(1, projectList.size());
         assertEquals(projectList.get(0).getId(), project.getId());
     }
 
     @Test
-    public void shareCredentialsEmail() throws Exception {
+    public void shareCredentialsEmail() {
         given(userService.getByEmail(anyString())).willReturn(Optional.of(user));
         given(projectRepository.findById(anyInt())).willReturn(Optional.of(project));
         given(projectService.save(any(Project.class))).willReturn(project);

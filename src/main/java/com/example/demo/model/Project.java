@@ -9,13 +9,14 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Project {
+public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
