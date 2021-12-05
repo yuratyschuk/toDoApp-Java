@@ -1,97 +1,56 @@
-version: "3.5"
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+version: '3.7'
+
+# Define services
 services:
-
-  jenkins-docker:
-    image: jenkins-docker
+  # App backend service
+  app-server:
+    # Configuration for building the docker image for the backend service
+    build:
+      context: todoapp-docker # Use an image built from the specified dockerfile in the `spring-boot-oauth2-social-login` directory.
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
-
-  todoapp-angular:
-    image: todoapp-angular:latest
-    ports:
-      - "4200:80"
-
-  elasticsearch:
-    user: "$UID:$GID"
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
-    ports:
-      - "9200:9200"
-    environment:
-      - "discovery.type=single-node"
-    volumes:
-      - ./elasticsearch/data:/usr/share/elasticsearch/data:rw              # Persistence data
-
-  logstash:
-    user: "$UID:$GID"
-    image: docker.elastic.co/logstash/logstash:7.2.0
-    ports:
-      - "25826:25826"
-      - "5044:5044"
-    volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro                # Pipeline configuration
-    restart: on-failure
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: always
     depends_on:
-      - elasticsearch
+      - db # This service depends on mysql. Start that first.
+    environment: # Pass environment variables to the service
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/todo_application?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+      - frontend
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.2.0
+  # Frontend Service
+  app-client:
+    build:
+      context: todoapp_angular_docker # Use an image built from the specified dockerfile in the `angular-11-social-login` directory.
+      dockerfile: Dockerfile
+      args:
+        API_BASE_URL: http://127.0.0.1:8080
     ports:
-      - "5601:5601"
-    restart: on-failure
+      - "8081:80" # Map the exposed port 80 on the container to port 8081 on the host machine
+    restart: always
     depends_on:
-      - elasticsearch
-
-  filebeat:
-
-    image: docker.elastic.co/beats/filebeat:7.2.0
-    volumes:
-      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro # Configuration file
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro           # Docker logs
-      - /var/run/docker.sock:/var/run/docker.sock:ro                       # Additional information about containers
-      - ./filebeat/data:/usr/share/filebeat/data:rw                        # Persistence data
-    user: "$UID:$GID"                                                           # Allow access to log files and docker.sock
-    restart: on-failure
-    depends_on:
-      - logstash
-
-  todo-service:
-    image: todo-app:latest
-    ports:
-      - "8081:8081"
-    labels:
-      collect_logs_with_filebeat: "true"
-      decode_log_event_to_json_object: "true"
-
-
-  grafana:
-    user: "$UID:$GID"
-    build: './config/'
-    ports:
-      - 3000:3000
-    volumes:
-      - ./grafana:/var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - app-server
     networks:
-      monitoring:
-        aliases:
-          - grafana
-  prometheus:
-    user: "$UID:$GID"
-    image: prom/prometheus
+      - frontend
+
+  # Database Service (Mysql)
+  db:
+    image: mysql:8.0
     ports:
-      - 9095:9095
-    volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus:/prometheus
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: demo
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
     networks:
-      monitoring:
-        aliases:
-          - prometheus
+      - backend
+
+# Networks to be created to facilitate communication between containers
 networks:
-  monitoring:
+  backend:

@@ -1,0 +1,40 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: todoapp-server
+  labels:
+    name: todoapp-server
+spec:
+  ports:
+    - nodePort: 30163
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: todoapp-server
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todoapp-server
+spec:
+  selector:
+    matchLabels:
+      app: todoapp-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: todoapp-server
+    spec:
+      containers:
+        - name: todoapp-server
+          image: yuratyschuk/todoapp-docker-java:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:   # Setting Enviornmental Variables
+            - name: SPRING_DATASOURCE_URL   # Setting Database host address from configMap
+              value: jdbc:mysql://todo-mysql:3306/todo_application?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true

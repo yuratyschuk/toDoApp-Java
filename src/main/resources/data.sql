@@ -22,5 +22,3 @@ INSERT INTO user_project(user_id, project_id)
 VALUES (4, 1),
        (4, 3),
        (4, 2);
-
-
